@@ -1,0 +1,43 @@
+{
+  "name": "meritum/virtus",
+  "description": "Meritum HTTP API application scaffold",
+  "type": "project",
+  "license": "MIT",
+  "require": {
+    "php": "^8.4",
+    "meritum/http": "^1.0",
+    "meritum/database": "^1.0",
+    "meritum/validation": "^1.0",
+    "meritum/logger": "^1.0",
+    "meritum/structured-logging": "^1.0",
+    "meritum/serialization": "^1.0",
+    "meritum/http-exception-handler": "^1.0",
+    "meritum/bus-module": "^1.0"
+  },
+  "require-dev": {
+    "bnf/phpstan-psr-container": "^1.0",
+    "phpstan/phpstan": "^2.0",
+    "phpunit/phpunit": "^11.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Junction\\Api\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Junction\\Api\\Test\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "test": [
+      "vendor/bin/phpunit"
+    ],
+    "analyze": [
+      "vendor/bin/phpstan"
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+# Composer
+/vendor/
+
+# PHP CS Fixer
+.php-cs-fixer.dist.php
+.php-cs-fixer.cache
+
+# PHPUnit
+.phpunit.result.cache
+.phpunit.cache/
+/coverage/
+
+# Environment
+.env
+
+# devenv
+.devenv/
+.devenv.flake.nix
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
