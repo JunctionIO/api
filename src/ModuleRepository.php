@@ -17,6 +17,7 @@ final class ModuleRepository implements ModuleRepositoryInterface
     {
         return [
             new AppModule(),
+            new Http\HttpModule(),
             new \Meritum\Database\DatabaseModule(),
             new \Meritum\Validation\ValidationModule(),
             new \Meritum\Logger\LoggerModule(),
