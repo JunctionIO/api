@@ -44,7 +44,7 @@ final class LogDebugInfoTest extends TestCase
         (new LogDebugInfo())($kernel);
     }
 
-    private function makeKernel(bool $isDebug, ContainerInterface $container, array $debugInfo): KernelInterface&DebuggableInterface
+    private function makeKernel(bool $isDebug, ContainerInterface $container, array $debugInfo): KernelInterface
     {
         return new class($isDebug, $container, $debugInfo) implements KernelInterface, DebuggableInterface {
             public function __construct(
