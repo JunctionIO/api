@@ -617,16 +617,16 @@
         },
         {
             "name": "meritum/logger",
-            "version": "1.0.1",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/logger.git",
-                "reference": "bb215253bb1cfec879f6efb8decd4ec559ae87ac"
+                "reference": "9386d672acd21349734816ab0d2f6bab8ac6ad66"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/logger/zipball/bb215253bb1cfec879f6efb8decd4ec559ae87ac",
-                "reference": "bb215253bb1cfec879f6efb8decd4ec559ae87ac",
+                "url": "https://api.github.com/repos/MeritumIO/logger/zipball/9386d672acd21349734816ab0d2f6bab8ac6ad66",
+                "reference": "9386d672acd21349734816ab0d2f6bab8ac6ad66",
                 "shasum": ""
             },
             "require": {
@@ -660,9 +660,9 @@
             "description": "Minimal PSR-3 logger that writes newline-delimited JSON to stdout",
             "support": {
                 "issues": "https://github.com/MeritumIO/logger/issues",
-                "source": "https://github.com/MeritumIO/logger/tree/1.0.1"
+                "source": "https://github.com/MeritumIO/logger/tree/1.0.2"
             },
-            "time": "2026-06-16T06:22:07+00:00"
+            "time": "2026-06-19T20:48:44+00:00"
         },
         {
             "name": "meritum/serialization",
