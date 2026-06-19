@@ -8,6 +8,7 @@ in {
     php
   ] ++ lib.optionals (!config.container.isBuilding) [
     php.packages.composer
+    pkgs.jq
   ];
 
   services.postgres = {
@@ -16,7 +17,7 @@ in {
     initialDatabases = [{ name = "junction"; user = "junction"; pass = "junction"; }];
   };
 
-  processes.web.exec = "php -S 0.0.0.0:8000 -t www";
+  processes.web.exec = "php -S 0.0.0.0:8000 -t www 2>/dev/null | jq -R 'try fromjson catch .'";
 
   enterShell = ''
     set +x
