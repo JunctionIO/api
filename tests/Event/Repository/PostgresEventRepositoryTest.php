@@ -7,6 +7,7 @@ use Georgeff\Database\Contract\SelectInterface;
 use Georgeff\Database\Contract\DatabaseManagerInterface;
 use Meritum\Database\Support\Collection;
 use Meritum\Database\Support\CursorPaginator;
+use Junction\Api\Event\Event;
 use Junction\Api\Event\Repository\PostgresEventRepository;
 
 final class PostgresEventRepositoryTest extends TestCase
@@ -68,4 +69,54 @@ final class PostgresEventRepositoryTest extends TestCase
         $this->assertInstanceOf(CursorPaginator::class, $result);
     }
 
+    public function test_find_by_name_returns_event_when_found(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('where')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchOne')->willReturn(
+            ['id' => 'uuid-1', 'name' => 'event.one', 'description' => null, 'created_at' => null, 'updated_at' => null]
+        );
+
+        $result = (new PostgresEventRepository($db))->findByName('event.one');
+
+        $this->assertInstanceOf(Event::class, $result);
+        $this->assertSame('event.one', $result->name);
+    }
+
+    public function test_find_by_name_returns_null_when_not_found(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('where')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchOne')->willReturn(null);
+
+        $result = (new PostgresEventRepository($db))->findByName('event.missing');
+
+        $this->assertNull($result);
+    }
+
+    public function test_find_by_name_queries_by_name_column(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('where')->willReturn($query);
+
+        $query->expects($this->once())
+            ->method('where')
+            ->with('name', 'event.one')
+            ->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchOne')->willReturn(null);
+
+        (new PostgresEventRepository($db))->findByName('event.one');
+    }
 }

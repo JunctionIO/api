@@ -15,5 +15,15 @@ final class EventModule implements ModuleInterface
             EventRepositoryInterface::class,
             fn(ContainerInterface $c) => new Repository\PostgresEventRepository($c->get(DatabaseManagerInterface::class))
         );
+
+        $kernel->define(
+            Command\FindOrCreateHandler::class,
+            fn(ContainerInterface $c) => new Command\FindOrCreateHandler($c->get(EventRepositoryInterface::class))
+        );
+
+        $kernel->define(
+            Command\UpdateHandler::class,
+            fn(ContainerInterface $c) => new Command\UpdateHandler($c->get(EventRepositoryInterface::class))
+        );
     }
 }

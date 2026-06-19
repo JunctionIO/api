@@ -27,6 +27,11 @@ final class PostgresEventRepository extends Repository implements EventRepositor
         return $this->get();
     }
 
+    public function findByName(string $name): ?Event
+    {
+        return $this->findBy('name', $name);
+    }
+
     protected function getModelClass(): string
     {
         return Event::class;

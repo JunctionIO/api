@@ -23,4 +23,6 @@ interface EventRepositoryInterface extends RepositoryInterface
      * @return Collection<Event>
      */
     public function getByIds(array $ids): Collection;
+
+    public function findByName(string $name): ?Event;
 }
