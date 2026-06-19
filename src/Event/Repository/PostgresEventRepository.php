@@ -1,0 +1,34 @@
+<?php
+
+namespace Junction\Api\Event\Repository;
+
+use Junction\Api\Event\Event;
+use Meritum\Database\Repository;
+use Meritum\Database\Support\Collection;
+use Meritum\Database\Support\CursorPaginator;
+use Junction\Api\Event\EventRepositoryInterface;
+
+/**
+ * @extends Repository<Event>
+ */
+final class PostgresEventRepository extends Repository implements EventRepositoryInterface
+{
+    public function all(int $perPage, ?string $cursor = null): CursorPaginator
+    {
+        $this->query()->orderBy('name', 'ASC');
+
+        return $this->cursor($perPage, $cursor);
+    }
+
+    public function getByIds(array $ids): Collection
+    {
+        $this->query()->whereIn('id', $ids);
+
+        return $this->get();
+    }
+
+    protected function getModelClass(): string
+    {
+        return Event::class;
+    }
+}
