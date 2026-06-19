@@ -18,6 +18,7 @@ final class AppModule implements ConfigurableModuleInterface
 
         // Global Middleware
         $kernel->addMiddleware(Http\Middleware\Correlation::class);
+        $kernel->addMiddleware(new Http\Middleware\SetRouteArgumentsOnRequest());
 
         // Routes
 
