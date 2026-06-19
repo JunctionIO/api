@@ -12,7 +12,7 @@ in {
 
   services.postgres = {
     enable = !config.container.isBuilding;
-    listen_addresses = "127.0.0.1";
+    listen_addresses = "0.0.0.0";
     initialDatabases = [{ name = "junction"; user = "junction"; pass = "junction"; }];
   };
 
