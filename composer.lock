@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b69a7419f5dc43ed509d18d8bf3f956c",
+    "content-hash": "8006b465dbb11982ed740dd86e86ff7d",
     "packages": [
         {
             "name": "aura/sql",
@@ -130,6 +130,56 @@
                 "source": "https://github.com/auraphp/Aura.SqlQuery/tree/3.0.0"
             },
             "time": "2023-04-25T13:21:16+00:00"
+        },
+        {
+            "name": "georgeff/bus",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MikeGeorgeff/bus.git",
+                "reference": "0bf4184ccb3b9346f5e3ed7d8b0bf01667830256"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MikeGeorgeff/bus/zipball/0bf4184ccb3b9346f5e3ed7d8b0bf01667830256",
+                "reference": "0bf4184ccb3b9346f5e3ed7d8b0bf01667830256",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^11.0",
+                "psr/container": "^2.0",
+                "squizlabs/php_codesniffer": "^3.11"
+            },
+            "suggest": {
+                "psr/container": "Required for PsrContainerResolver"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Georgeff\\Bus\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Georgeff",
+                    "email": "mike@georgeff.co",
+                    "role": "Author"
+                }
+            ],
+            "description": "A message bus library",
+            "support": {
+                "issues": "https://github.com/MikeGeorgeff/bus/issues",
+                "source": "https://github.com/MikeGeorgeff/bus/tree/1.0.0"
+            },
+            "time": "2026-02-12T02:55:19+00:00"
         },
         {
             "name": "georgeff/container",
@@ -362,6 +412,55 @@
                 }
             ],
             "time": "2025-10-12T15:31:36+00:00"
+        },
+        {
+            "name": "meritum/bus-module",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MeritumIO/bus-module.git",
+                "reference": "d87f552039bcbc3c1b066ae6d2469a54d18ca947"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MeritumIO/bus-module/zipball/d87f552039bcbc3c1b066ae6d2469a54d18ca947",
+                "reference": "d87f552039bcbc3c1b066ae6d2469a54d18ca947",
+                "shasum": ""
+            },
+            "require": {
+                "georgeff/bus": "^1.0",
+                "georgeff/kernel": "^1.6",
+                "php": "^8.4"
+            },
+            "require-dev": {
+                "bnf/phpstan-psr-container": "^1.0",
+                "phpstan/phpstan": "^2.0",
+                "phpunit/phpunit": "^11.0",
+                "squizlabs/php_codesniffer": "^3.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Meritum\\BusModule\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mike Georgeff",
+                    "email": "mike@georgeff.co",
+                    "role": "Author"
+                }
+            ],
+            "description": "Meritum module for bootstrapping georgeff/bus into the kernel ecosystem",
+            "support": {
+                "issues": "https://github.com/MeritumIO/bus-module/issues",
+                "source": "https://github.com/MeritumIO/bus-module/tree/1.0.0"
+            },
+            "time": "2026-06-19T04:59:36+00:00"
         },
         {
             "name": "meritum/database",

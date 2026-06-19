@@ -11,7 +11,8 @@
     "meritum/logger": "^1.0",
     "meritum/structured-logging": "^1.0",
     "meritum/serialization": "^1.0",
-    "meritum/http-exception-handler": "^1.0"
+    "meritum/http-exception-handler": "^1.0",
+    "meritum/bus-module": "^1.0"
   },
   "require-dev": {
     "bnf/phpstan-psr-container": "^1.0",
