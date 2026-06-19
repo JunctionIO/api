@@ -7,6 +7,7 @@ use Psr\Container\ContainerInterface;
 use Georgeff\Kernel\Module\ModuleInterface;
 use Meritum\StructuredLogging\CorrelationId;
 use Meritum\Serialization\FormatterInterface;
+use Junction\Api\Event\EventRepositoryInterface;
 
 final class HttpModule implements ModuleInterface
 {
@@ -20,6 +21,11 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Handler\JsonResponseHandler::class,
             fn(ContainerInterface $c) => new Handler\JsonResponseHandler($c->get(FormatterInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Event\All::class,
+            fn(ContainerInterface $c) => new Middleware\Event\All($c->get(EventRepositoryInterface::class))
         );
     }
 }
