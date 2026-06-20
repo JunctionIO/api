@@ -17,7 +17,7 @@ abstract class AbstractValidator implements MiddlewareInterface
     /**
      * @return array<string, array<int|string, mixed>>
      */
-    abstract protected function rules(ServerRequestInterface $request): array;
+    abstract public function rules(ServerRequestInterface $request): array;
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

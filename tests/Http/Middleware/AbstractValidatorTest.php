@@ -15,7 +15,7 @@ final class AbstractValidatorTest extends TestCase
     private function makeMiddleware(Validator $validator): AbstractValidator
     {
         return new class($validator) extends AbstractValidator {
-            protected function rules(ServerRequestInterface $request): array
+            public function rules(ServerRequestInterface $request): array
             {
                 return [];
             }
