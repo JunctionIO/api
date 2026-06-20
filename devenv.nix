@@ -17,7 +17,7 @@ in {
     initialDatabases = [{ name = "junction"; user = "junction"; pass = "junction"; }];
   };
 
-  processes.web.exec = "php -S 0.0.0.0:8000 -t www 2>/dev/null | jq -R 'try fromjson catch .'";
+  processes.web.exec = "stdbuf -oL php -S 0.0.0.0:8000 -t www 2>/dev/null | jq --unbuffered -R 'try fromjson catch .'";
 
   enterShell = ''
     set +x
