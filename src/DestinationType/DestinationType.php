@@ -1,16 +1,17 @@
 <?php
 
-namespace Junction\Api\Event;
+namespace Junction\Api\DestinationType;
 
 use Meritum\Database\Model;
 
-final class Event extends Model
+final class DestinationType extends Model
 {
-    protected string $table = 'events';
+    protected string $table = 'destination_types';
 
     protected array $casts = [
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime',
+        'config_schema' => 'json',
+        'created_at'    => 'datetime',
+        'updated_at'    => 'datetime',
     ];
 
     public string $id {
@@ -30,6 +31,16 @@ final class Event extends Model
         }
     }
 
+    public string $queue {
+        get {
+            /** @var string */
+            return $this->getAttribute('queue');
+        }
+        set {
+            $this->setAttribute('queue', $value);
+        }
+    }
+
     public ?string $description {
         get {
             /** @var string|null */
@@ -37,6 +48,19 @@ final class Event extends Model
         }
         set {
             $this->setAttribute('description', $value);
+        }
+    }
+
+    /**
+     * @var string[]
+     */
+    public array $configSchema {
+        get {
+            /** @var string[] */
+            return $this->getAttribute('config_schema');
+        }
+        set {
+            $this->setAttribute('config_schema', $value);
         }
     }
 
