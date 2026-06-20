@@ -12,6 +12,8 @@ use Meritum\Database\Support\CursorPaginator;
  */
 interface EventRepositoryInterface extends RepositoryInterface
 {
+    public function exists(string $id): bool;
+
     /**
      * @return CursorPaginator<Event>
      */

@@ -119,4 +119,54 @@ final class PostgresEventRepositoryTest extends TestCase
 
         (new PostgresEventRepository($db))->findByName('event.one');
     }
+
+    public function test_exists_returns_true_when_record_found(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('where')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchOne')->willReturn(
+            ['id' => '550e8400-e29b-41d4-a716-446655440000']
+        );
+
+        $result = (new PostgresEventRepository($db))->exists('550e8400-e29b-41d4-a716-446655440000');
+
+        $this->assertTrue($result);
+    }
+
+    public function test_exists_returns_false_when_record_not_found(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('where')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchOne')->willReturn(null);
+
+        $result = (new PostgresEventRepository($db))->exists('550e8400-e29b-41d4-a716-446655440000');
+
+        $this->assertFalse($result);
+    }
+
+    public function test_exists_queries_by_id_column(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('where')->willReturn($query);
+
+        $query->expects($this->once())
+            ->method('where')
+            ->with('id', '550e8400-e29b-41d4-a716-446655440000')
+            ->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchOne')->willReturn(null);
+
+        (new PostgresEventRepository($db))->exists('550e8400-e29b-41d4-a716-446655440000');
+    }
 }
