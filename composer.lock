@@ -714,16 +714,16 @@
         },
         {
             "name": "meritum/structured-logging",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/structured-logging.git",
-                "reference": "1f6c3a012048f7f98b004ccb287d1a280e9ac818"
+                "reference": "851532e26f6f73d6290d48cf102ed6462526fb95"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/structured-logging/zipball/1f6c3a012048f7f98b004ccb287d1a280e9ac818",
-                "reference": "1f6c3a012048f7f98b004ccb287d1a280e9ac818",
+                "url": "https://api.github.com/repos/MeritumIO/structured-logging/zipball/851532e26f6f73d6290d48cf102ed6462526fb95",
+                "reference": "851532e26f6f73d6290d48cf102ed6462526fb95",
                 "shasum": ""
             },
             "require": {
@@ -760,9 +760,9 @@
             "description": "Meritum module for structured exception logging — domain exception model, translation pipeline, PSR-3 reporting, and correlation ID enrichment",
             "support": {
                 "issues": "https://github.com/MeritumIO/structured-logging/issues",
-                "source": "https://github.com/MeritumIO/structured-logging/tree/1.0.0"
+                "source": "https://github.com/MeritumIO/structured-logging/tree/1.0.1"
             },
-            "time": "2026-06-10T21:50:11+00:00"
+            "time": "2026-06-20T18:07:40+00:00"
         },
         {
             "name": "meritum/validation",
