@@ -26,7 +26,7 @@ final class ModuleRepository implements ModuleRepositoryInterface
             new \Meritum\StructuredLogging\StructuredLoggingModule(),
             new \Meritum\Serialization\SerializationModule(),
             new \Meritum\HttpExceptionHandler\ExceptionHandlerModule(),
-            new \Meritum\BusModule\BusModule(),
+            new \Meritum\BusModule\BusModule(false),
         ];
     }
 }
