@@ -12,7 +12,7 @@ final class SetRouteArgumentsOnRequest implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $route = $request->getAttribute('__route__');
+        $route = $request->getAttribute(RouteInterface::class);
 
         assert($route instanceof RouteInterface);
 

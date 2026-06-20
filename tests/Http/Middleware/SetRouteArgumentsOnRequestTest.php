@@ -19,7 +19,7 @@ final class SetRouteArgumentsOnRequestTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
 
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getAttribute')->with('__route__')->willReturn($route);
+        $request->method('getAttribute')->with(RouteInterface::class)->willReturn($route);
 
         $requestWithId = $this->createMock(ServerRequestInterface::class);
         $requestWithId->method('withAttribute')->with('type', 'http')->willReturn(
@@ -50,7 +50,7 @@ final class SetRouteArgumentsOnRequestTest extends TestCase
         $response = $this->createMock(ResponseInterface::class);
 
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getAttribute')->with('__route__')->willReturn($route);
+        $request->method('getAttribute')->with(RouteInterface::class)->willReturn($route);
         $request->expects($this->never())->method('withAttribute');
 
         $handler = $this->createMock(RequestHandlerInterface::class);
@@ -65,7 +65,7 @@ final class SetRouteArgumentsOnRequestTest extends TestCase
     public function test_assert_fails_when_route_not_set(): void
     {
         $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getAttribute')->with('__route__')->willReturn(null);
+        $request->method('getAttribute')->with(RouteInterface::class)->willReturn(null);
 
         $handler = $this->createMock(RequestHandlerInterface::class);
 
