@@ -513,16 +513,16 @@
         },
         {
             "name": "meritum/http",
-            "version": "1.0.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/http.git",
-                "reference": "c7214593debdab1e6b613f88b79058dd5526902e"
+                "reference": "83557ad91b5051a44d2e0e5ad2aaf15dd09ec5b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/http/zipball/c7214593debdab1e6b613f88b79058dd5526902e",
-                "reference": "c7214593debdab1e6b613f88b79058dd5526902e",
+                "url": "https://api.github.com/repos/MeritumIO/http/zipball/83557ad91b5051a44d2e0e5ad2aaf15dd09ec5b8",
+                "reference": "83557ad91b5051a44d2e0e5ad2aaf15dd09ec5b8",
                 "shasum": ""
             },
             "require": {
@@ -561,22 +561,22 @@
             "description": "Module-first PSR-15 HTTP kernel for the Meritum ecosystem",
             "support": {
                 "issues": "https://github.com/MeritumIO/http/issues",
-                "source": "https://github.com/MeritumIO/http/tree/1.0.0"
+                "source": "https://github.com/MeritumIO/http/tree/1.2.0"
             },
-            "time": "2026-06-08T19:04:26+00:00"
+            "time": "2026-06-20T15:44:14+00:00"
         },
         {
             "name": "meritum/http-exception-handler",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/http-exception-handler.git",
-                "reference": "34f4ed77f7be46fb43010961e0fa2cbf47aa19c2"
+                "reference": "dfa7755abf6bb5bba347b36c6d785a74793c503c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/http-exception-handler/zipball/34f4ed77f7be46fb43010961e0fa2cbf47aa19c2",
-                "reference": "34f4ed77f7be46fb43010961e0fa2cbf47aa19c2",
+                "url": "https://api.github.com/repos/MeritumIO/http-exception-handler/zipball/dfa7755abf6bb5bba347b36c6d785a74793c503c",
+                "reference": "dfa7755abf6bb5bba347b36c6d785a74793c503c",
                 "shasum": ""
             },
             "require": {
@@ -611,9 +611,9 @@
             "description": "meritum/http exception handler that translates exceptions into structured JSON error responses using the meritum/structured-logging pipeline",
             "support": {
                 "issues": "https://github.com/MeritumIO/http-exception-handler/issues",
-                "source": "https://github.com/MeritumIO/http-exception-handler/tree/1.0.0"
+                "source": "https://github.com/MeritumIO/http-exception-handler/tree/1.1.0"
             },
-            "time": "2026-06-12T19:13:26+00:00"
+            "time": "2026-06-20T15:10:31+00:00"
         },
         {
             "name": "meritum/logger",
