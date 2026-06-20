@@ -29,12 +29,22 @@ final class LogDebugInfoTest extends TestCase
 
     public function test_logs_debug_info_when_debug_is_enabled(): void
     {
-        $debugInfo = ['foo' => 'bar'];
+        $debugInfo = [
+            'bootProfile'    => ['duration' => 0.001],
+            'requestProfile' => ['duration' => 0.002],
+            'modules'        => ['ModuleA'],
+            'services'       => ['resolved' => ['ServiceA' => ['resolutionCount' => 1]], 'unresolved' => []],
+        ];
 
         $logger = $this->createMock(LoggerInterface::class);
         $logger->expects($this->once())
             ->method('debug')
-            ->with('kernel.debug', ['kernel_debugInfo' => $debugInfo]);
+            ->with('kernel.debug', [
+                'boot_profile'      => $debugInfo['bootProfile'],
+                'request_profile'   => $debugInfo['requestProfile'],
+                'modules'           => $debugInfo['modules'],
+                'resolved_services' => $debugInfo['services']['resolved'],
+            ]);
 
         $container = $this->createMock(ContainerInterface::class);
         $container->method('get')->with(LoggerInterface::class)->willReturn($logger);

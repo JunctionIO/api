@@ -16,7 +16,27 @@ final class LogDebugInfo
 
             assert($kernel instanceof DebuggableInterface);
 
-            $logger->debug('kernel.debug', ['kernel_debugInfo' => $kernel->getDebugInfo()]);
+            /** @var array<string, array<string, mixed>> $debug */
+            $debug = $kernel->getDebugInfo();
+
+            $context = $this->formatLogContext($debug);
+
+            $logger->debug('kernel.debug', $context);
         }
+    }
+
+    /**
+     * @param array<string, array<string, mixed>> $debug
+     *
+     * @return array<string, mixed>
+     */
+    private function formatLogContext(array $debug): array
+    {
+        return [
+            'boot_profile'      => $debug['bootProfile'],
+            'request_profile'   => $debug['requestProfile'],
+            'modules'           => $debug['modules'],
+            'resolved_services' => $debug['services']['resolved'],
+        ];
     }
 }
