@@ -183,16 +183,16 @@
         },
         {
             "name": "georgeff/container",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MikeGeorgeff/container.git",
-                "reference": "a0407c4292dcbeb15a21e6480b3575af8e144551"
+                "reference": "361c69213ea85aa6066bb8318063409db743d8aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MikeGeorgeff/container/zipball/a0407c4292dcbeb15a21e6480b3575af8e144551",
-                "reference": "a0407c4292dcbeb15a21e6480b3575af8e144551",
+                "url": "https://api.github.com/repos/MikeGeorgeff/container/zipball/361c69213ea85aa6066bb8318063409db743d8aa",
+                "reference": "361c69213ea85aa6066bb8318063409db743d8aa",
                 "shasum": ""
             },
             "require": {
@@ -221,12 +221,12 @@
                     "role": "Author"
                 }
             ],
-            "description": "A light weight DI container",
+            "description": "A lightweight dependency injection container implementing PSR-11",
             "support": {
                 "issues": "https://github.com/MikeGeorgeff/container/issues",
-                "source": "https://github.com/MikeGeorgeff/container/tree/1.0.0"
+                "source": "https://github.com/MikeGeorgeff/container/tree/1.1.0"
             },
-            "time": "2026-02-07T20:27:57+00:00"
+            "time": "2026-06-20T01:46:56+00:00"
         },
         {
             "name": "georgeff/database",
@@ -278,20 +278,20 @@
         },
         {
             "name": "georgeff/kernel",
-            "version": "1.8.0",
+            "version": "1.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MikeGeorgeff/kernel.git",
-                "reference": "a5bd0f7558f5e7ac1d800fb0a9f0d387673f9d1a"
+                "reference": "ae90db48b3a9f6e4127695dc83492416ef8d8289"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MikeGeorgeff/kernel/zipball/a5bd0f7558f5e7ac1d800fb0a9f0d387673f9d1a",
-                "reference": "a5bd0f7558f5e7ac1d800fb0a9f0d387673f9d1a",
+                "url": "https://api.github.com/repos/MikeGeorgeff/kernel/zipball/ae90db48b3a9f6e4127695dc83492416ef8d8289",
+                "reference": "ae90db48b3a9f6e4127695dc83492416ef8d8289",
                 "shasum": ""
             },
             "require": {
-                "georgeff/container": "^1.0",
+                "georgeff/container": "^1.1",
                 "php": "^8.2",
                 "psr/container": "^2.0",
                 "psr/event-dispatcher": "^1.0"
@@ -321,9 +321,9 @@
             "description": "A lightweight application kernel with service container bootstrapping and lifecycle events",
             "support": {
                 "issues": "https://github.com/MikeGeorgeff/kernel/issues",
-                "source": "https://github.com/MikeGeorgeff/kernel/tree/1.8.0"
+                "source": "https://github.com/MikeGeorgeff/kernel/tree/1.9.0"
             },
-            "time": "2026-06-18T19:24:35+00:00"
+            "time": "2026-06-20T03:49:50+00:00"
         },
         {
             "name": "laminas/laminas-diactoros",
