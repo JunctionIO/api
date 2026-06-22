@@ -14,15 +14,6 @@ use Junction\Api\Event\EventRepositoryInterface;
  */
 final class PostgresEventRepository extends Repository implements EventRepositoryInterface
 {
-    public function exists(string $id): bool
-    {
-        $this->query(['id'])->where('id', $id);
-
-        $result = $this->first();
-
-        return null !== $result;
-    }
-
     public function all(int $perPage, ?string $cursor = null): CursorPaginator
     {
         $this->query();
