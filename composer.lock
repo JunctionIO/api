@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8006b465dbb11982ed740dd86e86ff7d",
+    "content-hash": "ae2f44dbb10b60d5dddae54cb764f8be",
     "packages": [
         {
             "name": "aura/sql",
@@ -230,16 +230,16 @@
         },
         {
             "name": "georgeff/database",
-            "version": "1.0.0",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MikeGeorgeff/database.git",
-                "reference": "0eb13e1d0cdef5790a4c046a292cfe6453de30a7"
+                "reference": "5ec9457f1e6789bdaf8862d24d02c0b59b888f3c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MikeGeorgeff/database/zipball/0eb13e1d0cdef5790a4c046a292cfe6453de30a7",
-                "reference": "0eb13e1d0cdef5790a4c046a292cfe6453de30a7",
+                "url": "https://api.github.com/repos/MikeGeorgeff/database/zipball/5ec9457f1e6789bdaf8862d24d02c0b59b888f3c",
+                "reference": "5ec9457f1e6789bdaf8862d24d02c0b59b888f3c",
                 "shasum": ""
             },
             "require": {
@@ -272,9 +272,9 @@
             "description": "A fluent query builder and database abstraction layer with read replica and transaction support.",
             "support": {
                 "issues": "https://github.com/MikeGeorgeff/database/issues",
-                "source": "https://github.com/MikeGeorgeff/database/tree/1.0.0"
+                "source": "https://github.com/MikeGeorgeff/database/tree/1.1.0"
             },
-            "time": "2026-04-02T21:01:05+00:00"
+            "time": "2026-06-21T20:37:05+00:00"
         },
         {
             "name": "georgeff/kernel",
@@ -464,20 +464,20 @@
         },
         {
             "name": "meritum/database",
-            "version": "1.0.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/database.git",
-                "reference": "3ab2dff1b0ed85a95ebac75741c37b37dfc08040"
+                "reference": "27affd768200a0cccad4ebb7a937a9e92f9a0b3e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/database/zipball/3ab2dff1b0ed85a95ebac75741c37b37dfc08040",
-                "reference": "3ab2dff1b0ed85a95ebac75741c37b37dfc08040",
+                "url": "https://api.github.com/repos/MeritumIO/database/zipball/27affd768200a0cccad4ebb7a937a9e92f9a0b3e",
+                "reference": "27affd768200a0cccad4ebb7a937a9e92f9a0b3e",
                 "shasum": ""
             },
             "require": {
-                "georgeff/database": "^1.0",
+                "georgeff/database": "^1.1",
                 "georgeff/kernel": "^1.7",
                 "php": "^8.4"
             },
@@ -507,9 +507,9 @@
             "description": "Model and repository layer for the Meritum ecosystem",
             "support": {
                 "issues": "https://github.com/MeritumIO/database/issues",
-                "source": "https://github.com/MeritumIO/database/tree/1.0.0"
+                "source": "https://github.com/MeritumIO/database/tree/1.2.1"
             },
-            "time": "2026-06-17T04:24:17+00:00"
+            "time": "2026-06-21T21:43:14+00:00"
         },
         {
             "name": "meritum/http",

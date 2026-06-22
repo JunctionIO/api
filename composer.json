@@ -5,13 +5,13 @@
   "license": "MIT",
   "require": {
     "php": "^8.4",
-    "meritum/http": "^1.0",
-    "meritum/database": "^1.0",
+    "meritum/http": "^1.2",
+    "meritum/database": "^1.2",
     "meritum/validation": "^1.0",
     "meritum/logger": "^1.0",
     "meritum/structured-logging": "^1.0",
     "meritum/serialization": "^1.0",
-    "meritum/http-exception-handler": "^1.0",
+    "meritum/http-exception-handler": "^1.1",
     "meritum/bus-module": "^1.0"
   },
   "require-dev": {
