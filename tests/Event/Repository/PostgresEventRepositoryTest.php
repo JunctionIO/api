@@ -169,4 +169,101 @@ final class PostgresEventRepositoryTest extends TestCase
 
         (new PostgresEventRepository($db))->exists('550e8400-e29b-41d4-a716-446655440000');
     }
+
+    public function test_get_by_ids_passes_columns_to_query(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('whereIn')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->expects($this->once())
+            ->method('select')
+            ->with(['id', 'name'])
+            ->willReturn($query);
+        $db->method('fetchAll')->willReturn([]);
+
+        (new PostgresEventRepository($db))->getByIds(['uuid-1'], ['id', 'name']);
+    }
+
+    public function test_get_by_ids_with_empty_array_returns_empty_collection(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('whereIn')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchAll')->willReturn([]);
+
+        $result = (new PostgresEventRepository($db))->getByIds([]);
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(0, $result);
+    }
+
+    public function test_get_by_name_returns_collection(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('whereIn')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchAll')->willReturn([
+            ['id' => 'uuid-1', 'name' => 'event.one', 'description' => null, 'created_at' => null, 'updated_at' => null],
+        ]);
+
+        $result = (new PostgresEventRepository($db))->getByName(['event.one']);
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(1, $result);
+    }
+
+    public function test_get_by_name_queries_by_name_column(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+
+        $query->expects($this->once())
+            ->method('whereIn')
+            ->with('name', ['event.one', 'event.two'])
+            ->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchAll')->willReturn([]);
+
+        (new PostgresEventRepository($db))->getByName(['event.one', 'event.two']);
+    }
+
+    public function test_get_by_name_passes_columns_to_query(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('whereIn')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->expects($this->once())
+            ->method('select')
+            ->with(['id', 'name'])
+            ->willReturn($query);
+        $db->method('fetchAll')->willReturn([]);
+
+        (new PostgresEventRepository($db))->getByName(['event.one'], ['id', 'name']);
+    }
+
+    public function test_generates_uuid_v7(): void
+    {
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $repo = new PostgresEventRepository($db);
+
+        $method = new \ReflectionMethod($repo, 'generateUuid');
+        $uuid = $method->invoke($repo);
+
+        $this->assertMatchesRegularExpression(
+            '/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/',
+            $uuid
+        );
+    }
 }

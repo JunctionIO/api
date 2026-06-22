@@ -53,4 +53,18 @@ final class EventTest extends TestCase
         $this->assertSame('Updated description', $event->description);
     }
 
+    public function test_created_at_getter(): void
+    {
+        $event = new Event(['id' => 'uuid-123', 'name' => 'test.event', 'created_at' => '2026-06-19 12:00:00']);
+
+        $this->assertInstanceOf(\DateTimeInterface::class, $event->createdAt);
+    }
+
+    public function test_updated_at_getter(): void
+    {
+        $event = new Event(['id' => 'uuid-123', 'name' => 'test.event', 'updated_at' => '2026-06-19 14:00:00']);
+
+        $this->assertInstanceOf(\DateTimeInterface::class, $event->updatedAt);
+    }
+
 }
