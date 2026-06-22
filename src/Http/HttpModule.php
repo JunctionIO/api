@@ -37,6 +37,11 @@ final class HttpModule implements ModuleInterface
         );
 
         $kernel->define(
+            Middleware\Event\Find::class,
+            fn(ContainerInterface $c) => new Middleware\Event\Find($c->get(EventRepositoryInterface::class))
+        );
+
+        $kernel->define(
             Middleware\Event\Exists::class,
             fn(ContainerInterface $c) => new Middleware\Event\Exists($c->get(EventRepositoryInterface::class))
         );
@@ -49,6 +54,22 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Middleware\Event\Update::class,
             fn(ContainerInterface $c) => new Middleware\Event\Update($c->get(DispatcherInterface::class))
+        );
+
+        // EventLog Middleware
+        $kernel->define(
+            Middleware\EventLog\Find::class,
+            fn(ContainerInterface $c) => new Middleware\EventLog\Find($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\EventLog\All::class,
+            fn(ContainerInterface $c) => new Middleware\EventLog\All($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\EventLog\ParseEventFilter::class,
+            fn(ContainerInterface $c) => new Middleware\EventLog\ParseEventFilter($c->get(EventRepositoryInterface::class))
         );
     }
 }

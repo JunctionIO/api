@@ -21,10 +21,19 @@ interface EventRepositoryInterface extends RepositoryInterface
 
     /**
      * @param string[] $ids
+     * @param string[] $columns
      *
      * @return Collection<Event>
      */
-    public function getByIds(array $ids): Collection;
+    public function getByIds(array $ids, array $columns = ['*']): Collection;
+
+    /**
+     * @param string[] $names
+     * @param string[] $columns
+     *
+     * @return Collection<Event>
+     */
+    public function getByName(array $names, array $columns = ['*']): Collection;
 
     public function findByName(string $name): ?Event;
 }
