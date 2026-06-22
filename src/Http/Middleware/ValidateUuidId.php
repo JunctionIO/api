@@ -15,8 +15,9 @@ final class ValidateUuidId implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        /** @var string $id */
         $id = $request->getAttribute('id', '');
+
+        assert(is_string($id));
 
         if (false === $this->uuid->validate($id)) {
             throw new NotFoundHttpException($request, 'The requested resource was not found');

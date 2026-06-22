@@ -2,22 +2,22 @@
 
 namespace Junction\Api\Test\Http\Middleware\Event;
 
-use Meritum\Http\Exception\NotFoundHttpException;
+use Junction\Api\Event\Event;
+use Junction\Api\Event\EventRepositoryInterface;
+use Junction\Api\Http\Middleware\Event\Find;
+use Meritum\Database\Exception\ModelNotFoundException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Junction\Api\Event\Event;
-use Junction\Api\Event\EventRepositoryInterface;
-use Junction\Api\Http\Middleware\Event\Find;
 
 final class FindTest extends TestCase
 {
     public function test_sets_model_as_data_attribute_when_found(): void
     {
-        $model = new Event(['id' => '550e8400-e29b-41d4-a716-446655440000', 'name' => 'test.event']);
+        $model          = new Event(['id' => '550e8400-e29b-41d4-a716-446655440000', 'name' => 'test.event']);
         $updatedRequest = $this->createMock(ServerRequestInterface::class);
-        $response = $this->createMock(ResponseInterface::class);
+        $response       = $this->createMock(ResponseInterface::class);
 
         $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getAttribute')->with('id', '')->willReturn('550e8400-e29b-41d4-a716-446655440000');
@@ -27,7 +27,7 @@ final class FindTest extends TestCase
             ->willReturn($updatedRequest);
 
         $repo = $this->createMock(EventRepositoryInterface::class);
-        $repo->method('find')->willReturn($model);
+        $repo->method('findOrFail')->willReturn($model);
 
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->once())->method('handle')->with($updatedRequest)->willReturn($response);
@@ -37,18 +37,18 @@ final class FindTest extends TestCase
         $this->assertSame($response, $result);
     }
 
-    public function test_throws_not_found_when_event_does_not_exist(): void
+    public function test_propagates_model_not_found_exception(): void
     {
         $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getAttribute')->with('id', '')->willReturn('550e8400-e29b-41d4-a716-446655440000');
 
         $repo = $this->createMock(EventRepositoryInterface::class);
-        $repo->method('find')->willReturn(null);
+        $repo->method('findOrFail')->willThrowException(new ModelNotFoundException());
 
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->never())->method('handle');
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(ModelNotFoundException::class);
 
         (new Find($repo))->process($request, $handler);
     }
@@ -63,7 +63,7 @@ final class FindTest extends TestCase
 
         $repo = $this->createMock(EventRepositoryInterface::class);
         $repo->expects($this->once())
-            ->method('find')
+            ->method('findOrFail')
             ->with('550e8400-e29b-41d4-a716-446655440000')
             ->willReturn($model);
 

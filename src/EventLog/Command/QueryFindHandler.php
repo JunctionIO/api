@@ -13,13 +13,9 @@ final class QueryFindHandler
         private readonly EventRepositoryInterface $eventRepo
     ) {}
 
-    public function __invoke(QueryFind $command): ?EventLog
+    public function __invoke(QueryFind $command): EventLog
     {
-        $model = $this->repo->find($command->id);
-
-        if (null === $model) {
-            return null;
-        }
+        $model = $this->repo->findOrFail($command->id);
 
         $event = $this->eventRepo->find($model->eventId);
 

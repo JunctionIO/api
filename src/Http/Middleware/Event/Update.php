@@ -15,8 +15,9 @@ final class Update implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        /** @var string $id */
         $id = $request->getAttribute('id');
+
+        assert(is_string($id));
 
         /** @var array{description: string|null} $input */
         $input = $request->getParsedBody();

@@ -2,7 +2,6 @@
 
 namespace Junction\Api\Event;
 
-use Junction\Api\Event\Event;
 use Meritum\Database\Support\Collection;
 use Meritum\Database\RepositoryInterface;
 use Meritum\Database\Support\CursorPaginator;

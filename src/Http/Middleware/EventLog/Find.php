@@ -9,7 +9,6 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Junction\Api\EventLog\Command\QueryFind;
-use Meritum\Http\Exception\NotFoundHttpException;
 
 final class Find implements MiddlewareInterface
 {
@@ -17,15 +16,13 @@ final class Find implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        /** @var string $id */
         $id = $request->getAttribute('id', '');
 
-        /** @var EventLog|null $model */
+        assert(is_string($id));
+
         $model = $this->bus->dispatch(new QueryFind($id));
 
-        if (null === $model) {
-            throw new NotFoundHttpException($request, "Event Log with ID [{$id}] was not found");
-        }
+        assert($model instanceof EventLog);
 
         $request = $request->withAttribute('data', $model);
 

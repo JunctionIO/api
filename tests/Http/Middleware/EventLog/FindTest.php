@@ -7,7 +7,7 @@ use Junction\Api\Event\Event;
 use Junction\Api\EventLog\EventLog;
 use Junction\Api\EventLog\Command\QueryFind;
 use Junction\Api\Http\Middleware\EventLog\Find;
-use Meritum\Http\Exception\NotFoundHttpException;
+use Meritum\Database\Exception\ModelNotFoundException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -41,18 +41,18 @@ final class FindTest extends TestCase
         $this->assertSame($response, $result);
     }
 
-    public function test_throws_not_found_when_log_does_not_exist(): void
+    public function test_propagates_model_not_found_exception(): void
     {
         $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getAttribute')->with('id', '')->willReturn('log-uuid');
 
         $bus = $this->createMock(DispatcherInterface::class);
-        $bus->method('dispatch')->willReturn(null);
+        $bus->method('dispatch')->willThrowException(new ModelNotFoundException());
 
         $handler = $this->createMock(RequestHandlerInterface::class);
         $handler->expects($this->never())->method('handle');
 
-        $this->expectException(NotFoundHttpException::class);
+        $this->expectException(ModelNotFoundException::class);
 
         (new Find($bus))->process($request, $handler);
     }
