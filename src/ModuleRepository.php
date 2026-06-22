@@ -21,6 +21,7 @@ final class ModuleRepository implements ModuleRepositoryInterface
             new Trace\TraceModule(),
             new Event\EventModule(),
             new EventLog\EventLogModule(),
+            new Exception\ExceptionModule(),
             new DestinationType\DestinationTypeModule(),
             new \Meritum\Database\DatabaseModule(),
             new \Meritum\Validation\ValidationModule(),

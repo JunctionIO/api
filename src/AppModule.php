@@ -42,7 +42,6 @@ final class AppModule implements ModuleInterface
 
         $kernel->addRoute('PATCH', '/v0/events/{id}', JsonResponseHandler::class)
                ->addMiddleware(ValidateUuidId::class)
-               ->addMiddleware(Http\Middleware\Event\Exists::class)
                ->addMiddleware(Http\Middleware\Event\Validator::class)
                ->addMiddleware(Http\Middleware\Event\Update::class)
                ->addMiddleware(new CreateResource(new EventSerializer()));

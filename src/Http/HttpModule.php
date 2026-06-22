@@ -42,11 +42,6 @@ final class HttpModule implements ModuleInterface
         );
 
         $kernel->define(
-            Middleware\Event\Exists::class,
-            fn(ContainerInterface $c) => new Middleware\Event\Exists($c->get(EventRepositoryInterface::class))
-        );
-
-        $kernel->define(
             Middleware\Event\Validator::class,
             fn(ContainerInterface $c) => new Middleware\Event\Validator($c->get(Validator::class))
         );
