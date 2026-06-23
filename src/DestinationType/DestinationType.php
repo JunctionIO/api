@@ -52,11 +52,11 @@ final class DestinationType extends Model
     }
 
     /**
-     * @var string[]
+     * @var array<string, array{required: bool, rules: array<int, string|array<string, mixed>>}>
      */
     public array $configSchema {
         get {
-            /** @var string[] */
+            /** @var array<string, array{required: bool, rules: array<int, string|array<string, mixed>>}> */
             return $this->getAttribute('config_schema');
         }
         set {

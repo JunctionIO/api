@@ -5,6 +5,7 @@ namespace Junction\Api\DestinationType\Repository;
 use Meritum\Database\Repository;
 use Meritum\Database\Support\Collection;
 use Junction\Api\DestinationType\DestinationType;
+use Meritum\Database\Exception\ModelNotFoundException;
 use Junction\Api\DestinationType\DestinationTypeRepositoryInterface;
 
 /**
@@ -24,6 +25,19 @@ final class PostgresDestinationTypeRepository extends Repository implements Dest
         $this->query($columns)->whereIn('id', $ids);
 
         return $this->get();
+    }
+
+    public function findById(string $id, array $columns = ['*']): DestinationType
+    {
+        $this->query($columns)->where('id', $id);
+
+        $model = $this->first();
+
+        if (null === $model) {
+            throw new ModelNotFoundException("Record with primary key value of [{$id}] was not found");
+        }
+
+        return $model;
     }
 
     protected function getModelClass(): string

@@ -76,22 +76,28 @@ final class DestinationTypeTest extends TestCase
 
     public function test_config_schema_getter(): void
     {
+        $schema = [
+            'url'    => ['required' => true,  'rules' => ['string', 'url']],
+            'method' => ['required' => false, 'rules' => ['string']],
+        ];
+
         $type = new DestinationType([
             'id'            => 'uuid-123',
             'name'          => 'http',
             'queue'         => 'http_queue',
-            'config_schema' => ['url', 'method'],
+            'config_schema' => $schema,
         ]);
 
-        $this->assertSame(['url', 'method'], $type->configSchema);
+        $this->assertSame($schema, $type->configSchema);
     }
 
     public function test_config_schema_setter(): void
     {
         $type = new DestinationType(['id' => 'uuid-123', 'name' => 'http', 'queue' => 'http_queue', 'config_schema' => []]);
 
-        $type->configSchema = ['url', 'headers'];
+        $schema = ['url' => ['required' => true, 'rules' => ['string', 'url']]];
+        $type->configSchema = $schema;
 
-        $this->assertSame(['url', 'headers'], $type->configSchema);
+        $this->assertSame($schema, $type->configSchema);
     }
 }

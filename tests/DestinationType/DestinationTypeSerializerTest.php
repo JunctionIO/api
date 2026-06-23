@@ -10,12 +10,17 @@ final class DestinationTypeSerializerTest extends TestCase
 {
     public function test_serializes_destination_type(): void
     {
+        $schema = [
+            'url'    => ['required' => true,  'rules' => ['string', 'url']],
+            'method' => ['required' => false, 'rules' => ['string']],
+        ];
+
         $type = new DestinationType([
             'id'            => 'uuid-123',
             'name'          => 'http',
             'queue'         => 'http_queue',
             'description'   => 'HTTP destination',
-            'config_schema' => ['url', 'method'],
+            'config_schema' => $schema,
             'created_at'    => '2026-06-20 12:00:00',
             'updated_at'    => '2026-06-20 14:00:00',
         ]);
@@ -26,7 +31,7 @@ final class DestinationTypeSerializerTest extends TestCase
         $this->assertSame('http', $result['name']);
         $this->assertSame('http_queue', $result['queue']);
         $this->assertSame('HTTP destination', $result['description']);
-        $this->assertSame(['url', 'method'], $result['config_schema']);
+        $this->assertSame($schema, $result['config_schema']);
         $this->assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}$/', $result['created_at']);
         $this->assertMatchesRegularExpression('/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}[+-]\d{2}:\d{2}$/', $result['updated_at']);
     }
