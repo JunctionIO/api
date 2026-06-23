@@ -13,6 +13,7 @@ use Junction\Api\Http\Middleware\CreateResource;
 use Junction\Api\Http\Handler\JsonResponseHandler;
 use Junction\Api\Http\Middleware\ValidateContentType;
 use Junction\Api\Http\Middleware\ParsePaginationQuery;
+use Junction\Api\DestinationType\DestinationTypeSerializer;
 
 final class AppModule implements ModuleInterface
 {
@@ -56,6 +57,15 @@ final class AppModule implements ModuleInterface
                ->addMiddleware(ValidateUuidId::class)
                ->addMiddleware(Http\Middleware\EventLog\Find::class)
                ->addMiddleware(new CreateResource(new EventLogSerializer()));
+
+        $kernel->addRoute('GET', '/v0/destination-types', JsonResponseHandler::class)
+               ->addMiddleware(Http\Middleware\DestinationType\All::class)
+               ->addMiddleware(new CreateResource(new DestinationTypeSerializer()));
+
+        $kernel->addRoute('GET', '/v0/destination-types/{id}', JsonResponseHandler::class)
+               ->addMiddleware(ValidateUuidId::class)
+               ->addMiddleware(Http\Middleware\DestinationType\Find::class)
+               ->addMiddleware(new CreateResource(new DestinationTypeSerializer()));
 
         // Kernel Hooks
         $kernel->afterShutdown(new KernelHook\LogDebugInfo());

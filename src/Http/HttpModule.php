@@ -10,6 +10,7 @@ use Georgeff\Kernel\Module\ModuleInterface;
 use Meritum\StructuredLogging\CorrelationId;
 use Meritum\Serialization\FormatterInterface;
 use Junction\Api\Event\EventRepositoryInterface;
+use Junction\Api\DestinationType\DestinationTypeRepositoryInterface;
 
 final class HttpModule implements ModuleInterface
 {
@@ -65,6 +66,17 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Middleware\EventLog\ParseEventFilter::class,
             fn(ContainerInterface $c) => new Middleware\EventLog\ParseEventFilter($c->get(EventRepositoryInterface::class))
+        );
+
+        // DestinationType Middleware
+        $kernel->define(
+            Middleware\DestinationType\All::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationType\All($c->get(DestinationTypeRepositoryInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\DestinationType\Find::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationType\Find($c->get(DestinationTypeRepositoryInterface::class))
         );
     }
 }
