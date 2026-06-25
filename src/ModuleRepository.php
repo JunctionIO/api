@@ -21,6 +21,7 @@ final class ModuleRepository implements ModuleRepositoryInterface
             new Http\HttpModule(),
             new Trace\TraceModule(),
             new Event\EventModule(),
+            new Context\ContextModule(),
             new EventLog\EventLogModule(),
             new Exception\ExceptionModule(),
             new Destination\DestinationModule(),
