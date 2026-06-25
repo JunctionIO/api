@@ -43,7 +43,7 @@ final class DestinationTypeTest extends TestCase
 
         $type->queue = 'grpc_queue';
 
-        $this->assertSame('grpc_queue', $type->queue);
+        $this->assertSame('junction.destinations.grpc_queue', $type->queue);
     }
 
     public function test_description_is_nullable(): void

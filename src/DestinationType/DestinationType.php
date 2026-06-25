@@ -6,6 +6,8 @@ use Meritum\Database\Model;
 
 final class DestinationType extends Model
 {
+    private const string QUEUE_PREFIX = 'junction.destinations.';
+
     protected string $table = 'destination_types';
 
     protected array $casts = [
@@ -98,5 +100,16 @@ final class DestinationType extends Model
         }
 
         return $rules;
+    }
+
+    protected function mutators(): array
+    {
+        return [
+            'queue' => function ($queue) {
+                assert(is_string($queue));
+
+                return self::QUEUE_PREFIX . $queue;
+            },
+        ];
     }
 }

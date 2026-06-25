@@ -75,6 +75,16 @@ final class HttpModule implements ModuleInterface
             fn(ContainerInterface $c) => new Middleware\DestinationType\Find($c->get(DestinationTypeRepositoryInterface::class))
         );
 
+        $kernel->define(
+            Middleware\DestinationType\UpsertValidator::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationType\UpsertValidator($c->get(Validator::class))
+        );
+
+        $kernel->define(
+            Middleware\DestinationType\Upsert::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationType\Upsert($c->get(DispatcherInterface::class))
+        );
+
         // Destination Middleware
         $kernel->define(
             Middleware\Destination\CreateValidator::class,

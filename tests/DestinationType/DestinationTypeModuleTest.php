@@ -18,7 +18,7 @@ final class DestinationTypeModuleTest extends TestCase
         $definition = $this->createMock(DefinitionInterface::class);
 
         $kernel = $this->createMock(KernelInterface::class);
-        $kernel->expects($this->once())
+        $kernel->expects($this->exactly(2))
             ->method('define')
             ->willReturn($definition);
 

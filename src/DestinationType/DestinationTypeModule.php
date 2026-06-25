@@ -15,5 +15,10 @@ final class DestinationTypeModule implements ModuleInterface
             DestinationTypeRepositoryInterface::class,
             fn(ContainerInterface $c) => new Repository\PostgresDestinationTypeRepository($c->get(DatabaseManagerInterface::class))
         );
+
+        $kernel->define(
+            Command\UpsertHandler::class,
+            fn(ContainerInterface $c) => new Command\UpsertHandler($c->get(DestinationTypeRepositoryInterface::class))
+        );
     }
 }

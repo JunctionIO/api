@@ -33,7 +33,13 @@ final class AppModule implements ModuleInterface
         $kernel->addMiddleware(new ValidateContentType());
         $kernel->addMiddleware(new BodyParser());
 
-        // Routes
+        // System Routes
+        $kernel->addRoute('POST', '/system/destination-types/register', JsonResponseHandler::class)
+               ->addMiddleware(Http\Middleware\DestinationType\UpsertValidator::class)
+               ->addMiddleware(Http\Middleware\DestinationType\Upsert::class)
+               ->addMiddleware(new CreateResource(new DestinationTypeSerializer()));
+
+        // Management Routes
         $kernel->addRoute('GET', '/v0/events', JsonResponseHandler::class)
                ->addMiddleware(new ParsePaginationQuery())
                ->addMiddleware(Http\Middleware\Event\All::class)
