@@ -15,6 +15,7 @@ use Junction\Api\Http\Handler\EmptyResponseHandler;
 use Junction\Api\Destination\DestinationSerializer;
 use Junction\Api\Http\Middleware\ValidateContentType;
 use Junction\Api\Http\Middleware\ParsePaginationQuery;
+use Junction\Api\DestinationLog\DestinationLogSerializer;
 use Junction\Api\DestinationType\DestinationTypeSerializer;
 
 final class AppModule implements ModuleInterface
@@ -57,6 +58,11 @@ final class AppModule implements ModuleInterface
                ->addMiddleware(Http\Middleware\EventLog\Find::class)
                ->addMiddleware(new CreateResource(new EventLogSerializer()));
 
+        $kernel->addRoute('GET', '/v0/event-logs/{id}/destinations', JsonResponseHandler::class)
+               ->addMiddleware(new ParsePaginationQuery())
+               ->addMiddleware(Http\Middleware\DestinationLog\AllForEventLog::class)
+               ->addMiddleware(new CreateResource(new DestinationLogSerializer()));
+
         $kernel->addRoute('GET', '/v0/destination-types', JsonResponseHandler::class)
                ->addMiddleware(Http\Middleware\DestinationType\All::class)
                ->addMiddleware(new CreateResource(new DestinationTypeSerializer()));
@@ -95,6 +101,11 @@ final class AppModule implements ModuleInterface
                ->addMiddleware(Http\Middleware\Destination\UpdateEventsValidator::class)
                ->addMiddleware(Http\Middleware\Destination\UpdateEvents::class)
                ->addMiddleware(new CreateResource(new DestinationSerializer()));
+
+        $kernel->addRoute('GET', '/v0/destinations/{id}/event-logs', JsonResponseHandler::class)
+               ->addMiddleware(new ParsePaginationQuery())
+               ->addMiddleware(Http\Middleware\DestinationLog\AllForDestination::class)
+               ->addMiddleware(new CreateResource(new DestinationLogSerializer()));
 
         // Kernel Hooks
         $kernel->afterShutdown(new KernelHook\LogDebugInfo());

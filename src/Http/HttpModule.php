@@ -130,5 +130,16 @@ final class HttpModule implements ModuleInterface
             Middleware\Destination\UpdateEvents::class,
             fn(ContainerInterface $c) => new Middleware\Destination\UpdateEvents($c->get(DispatcherInterface::class))
         );
+
+        // DestinationLog Middleware
+        $kernel->define(
+            Middleware\DestinationLog\AllForEventLog::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationLog\AllForEventLog($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\DestinationLog\AllForDestination::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationLog\AllForDestination($c->get(DispatcherInterface::class))
+        );
     }
 }

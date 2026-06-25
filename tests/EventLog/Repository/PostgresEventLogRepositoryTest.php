@@ -26,6 +26,37 @@ final class PostgresEventLogRepositoryTest extends TestCase
         $this->assertInstanceOf(CursorPaginator::class, $result);
     }
 
+    public function test_get_by_ids_returns_collection(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->method('whereIn')->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchAll')->willReturn([]);
+
+        $result = (new PostgresEventLogRepository($db))->getByIds(['elog-1', 'elog-2']);
+
+        $this->assertInstanceOf(\Meritum\Database\Support\Collection::class, $result);
+    }
+
+    public function test_get_by_ids_queries_by_id_column(): void
+    {
+        $query = $this->createMock(SelectInterface::class);
+        $query->method('from')->willReturn($query);
+        $query->expects($this->once())
+            ->method('whereIn')
+            ->with('id', ['elog-1', 'elog-2'])
+            ->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchAll')->willReturn([]);
+
+        (new PostgresEventLogRepository($db))->getByIds(['elog-1', 'elog-2']);
+    }
+
     public function test_all_for_events_returns_cursor_paginator(): void
     {
         $query = $this->createMock(SelectInterface::class);

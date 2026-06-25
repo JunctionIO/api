@@ -5,6 +5,7 @@ namespace Junction\Api\EventLog\Repository;
 use Meritum\Database\Repository;
 use Meritum\Database\Support\Uuid;
 use Junction\Api\EventLog\EventLog;
+use Meritum\Database\Support\Collection;
 use Meritum\Database\Support\CursorPaginator;
 use Junction\Api\EventLog\EventLogRepositoryInterface;
 
@@ -18,6 +19,13 @@ final class PostgresEventLogRepository extends Repository implements EventLogRep
         $this->query();
 
         return $this->cursor($perPage, $cursor);
+    }
+
+    public function getByIds(array $ids, array $columns = ['*']): Collection
+    {
+        $this->query($columns)->whereIn('id', $ids);
+
+        return $this->get();
     }
 
     public function allForEvents(array $eventIds, int $perPage, ?string $cursor = null): CursorPaginator

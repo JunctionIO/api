@@ -56,6 +56,34 @@ final class PostgrestDestinationRepositoryTest extends TestCase
         $this->assertInstanceOf(CursorPaginator::class, $result);
     }
 
+    // getByIds
+
+    public function test_get_by_ids_returns_collection(): void
+    {
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($this->makeSelectQuery());
+        $db->method('fetchAll')->willReturn([]);
+
+        $result = (new PostgrestDestinationRepository($db))->getByIds(['dest-1', 'dest-2']);
+
+        $this->assertInstanceOf(\Meritum\Database\Support\Collection::class, $result);
+    }
+
+    public function test_get_by_ids_queries_by_id_column(): void
+    {
+        $query = $this->makeSelectQuery();
+        $query->expects($this->once())
+            ->method('whereIn')
+            ->with('id', ['dest-1', 'dest-2'])
+            ->willReturn($query);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('select')->willReturn($query);
+        $db->method('fetchAll')->willReturn([]);
+
+        (new PostgrestDestinationRepository($db))->getByIds(['dest-1', 'dest-2']);
+    }
+
     // getEventIds
 
     public function test_get_event_ids_returns_array_of_ids(): void

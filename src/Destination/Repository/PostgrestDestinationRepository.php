@@ -7,6 +7,7 @@ use Meritum\Database\Support\Uuid;
 use Junction\Api\Destination\Destination;
 use Meritum\Database\Support\CursorPaginator;
 use Junction\Api\Destination\DestinationRepositoryInterface;
+use Meritum\Database\Support\Collection;
 
 /**
  * @extends Repository<Destination>
@@ -18,6 +19,13 @@ final class PostgrestDestinationRepository extends Repository implements Destina
         $this->query();
 
         return $this->cursor($perPage, $cursor);
+    }
+
+    public function getByIds(array $ids, array $columns = ['*']): Collection
+    {
+        $this->query($columns)->whereIn('id', $ids);
+
+        return $this->get();
     }
 
     public function getEventIds(string $id): array
