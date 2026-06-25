@@ -24,13 +24,15 @@ final class QueryFindHandler
 
         $model->setDestinationType($type);
 
-        $eventIds = $this->repo->getEventIds($model->id);
+        if ($command->withEvents) {
+            $eventIds = $this->repo->getEventIds($model->id);
 
-        $events = [] !== $eventIds
-            ? $this->events->getByIds($eventIds, ['id', 'name'])
-            : new Collection([]);
+            $events = [] !== $eventIds
+                ? $this->events->getByIds($eventIds, ['id', 'name'])
+                : new Collection([]);
 
-        $model->setEvents($events);
+            $model->setEvents($events);
+        }
 
         return $model;
     }

@@ -58,5 +58,13 @@ final class DestinationModule implements ModuleInterface
             Command\DeleteHandler::class,
             fn(ContainerInterface $c) => new Command\DeleteHandler($c->get(DestinationRepositoryInterface::class))
         );
+
+        $kernel->define(
+            Command\UpdateRelatedEventsHandler::class,
+            fn(ContainerInterface $c) => new Command\UpdateRelatedEventsHandler(
+                $c->get(DispatcherInterface::class),
+                $c->get(DestinationRepositoryInterface::class)
+            )
+        );
     }
 }

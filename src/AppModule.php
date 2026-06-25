@@ -91,6 +91,11 @@ final class AppModule implements ModuleInterface
         $kernel->addRoute('DELETE', '/v0/destinations/{id}', new EmptyResponseHandler())
                ->addMiddleware(Http\Middleware\Destination\Delete::class);
 
+        $kernel->addRoute('PUT', '/v0/destinations/{id}/events', JsonResponseHandler::class)
+               ->addMiddleware(Http\Middleware\Destination\UpdateEventsValidator::class)
+               ->addMiddleware(Http\Middleware\Destination\UpdateEvents::class)
+               ->addMiddleware(new CreateResource(new DestinationSerializer()));
+
         // Kernel Hooks
         $kernel->afterShutdown(new KernelHook\LogDebugInfo());
     }

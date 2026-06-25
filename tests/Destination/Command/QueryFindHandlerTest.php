@@ -160,4 +160,23 @@ final class QueryFindHandlerTest extends TestCase
         $this->assertNotNull($result->getEvents());
         $this->assertTrue($result->getEvents()->isEmpty());
     }
+
+    public function test_does_not_load_events_when_with_events_is_false(): void
+    {
+        $repo = $this->createMock(DestinationRepositoryInterface::class);
+        $repo->method('findOrFail')->willReturn($this->makeDestination());
+        $repo->expects($this->never())->method('getEventIds');
+
+        $events = $this->createMock(EventRepositoryInterface::class);
+        $events->expects($this->never())->method('getByIds');
+
+        $this->makeHandler($repo, events: $events)(new QueryFind('dest-uuid', withEvents: false));
+    }
+
+    public function test_returns_null_events_when_with_events_is_false(): void
+    {
+        $result = $this->makeHandler()(new QueryFind('dest-uuid', withEvents: false));
+
+        $this->assertNull($result->getEvents());
+    }
 }

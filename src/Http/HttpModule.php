@@ -87,6 +87,11 @@ final class HttpModule implements ModuleInterface
         );
 
         $kernel->define(
+            Middleware\Destination\UpdateEventsValidator::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\UpdateEventsValidator($c->get(Validator::class))
+        );
+
+        $kernel->define(
             Middleware\Destination\All::class,
             fn(ContainerInterface $c) => new Middleware\Destination\All($c->get(DispatcherInterface::class))
         );
@@ -119,6 +124,11 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Middleware\Destination\FindDestinationType::class,
             fn(ContainerInterface $c) => new Middleware\Destination\FindDestinationType($c->get(DestinationTypeRepositoryInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\UpdateEvents::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\UpdateEvents($c->get(DispatcherInterface::class))
         );
     }
 }
