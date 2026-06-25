@@ -464,16 +464,16 @@
         },
         {
             "name": "meritum/database",
-            "version": "1.2.1",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/database.git",
-                "reference": "27affd768200a0cccad4ebb7a937a9e92f9a0b3e"
+                "reference": "9e51d24f88ad1dae6363c7dac27ec8789a0f8bc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/database/zipball/27affd768200a0cccad4ebb7a937a9e92f9a0b3e",
-                "reference": "27affd768200a0cccad4ebb7a937a9e92f9a0b3e",
+                "url": "https://api.github.com/repos/MeritumIO/database/zipball/9e51d24f88ad1dae6363c7dac27ec8789a0f8bc9",
+                "reference": "9e51d24f88ad1dae6363c7dac27ec8789a0f8bc9",
                 "shasum": ""
             },
             "require": {
@@ -507,9 +507,9 @@
             "description": "Model and repository layer for the Meritum ecosystem",
             "support": {
                 "issues": "https://github.com/MeritumIO/database/issues",
-                "source": "https://github.com/MeritumIO/database/tree/1.2.1"
+                "source": "https://github.com/MeritumIO/database/tree/1.3.1"
             },
-            "time": "2026-06-21T21:43:14+00:00"
+            "time": "2026-06-24T22:06:40+00:00"
         },
         {
             "name": "meritum/http",
@@ -770,12 +770,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/validation.git",
-                "reference": "352c659bab97ece9a5f3a9cc5959e81f22065ad0"
+                "reference": "9e3791e6ffa35f10c9d487654adedd9fc261f198"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/validation/zipball/352c659bab97ece9a5f3a9cc5959e81f22065ad0",
-                "reference": "352c659bab97ece9a5f3a9cc5959e81f22065ad0",
+                "url": "https://api.github.com/repos/MeritumIO/validation/zipball/9e3791e6ffa35f10c9d487654adedd9fc261f198",
+                "reference": "9e3791e6ffa35f10c9d487654adedd9fc261f198",
                 "shasum": ""
             },
             "require": {
@@ -810,7 +810,7 @@
                 "issues": "https://github.com/MeritumIO/validation/issues",
                 "source": "https://github.com/MeritumIO/validation/tree/1.0.0"
             },
-            "time": "2026-06-09T23:14:27+00:00"
+            "time": "2026-06-24T23:25:31+00:00"
         },
         {
             "name": "nikic/fast-route",
