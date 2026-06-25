@@ -9,6 +9,7 @@ use Georgeff\Kernel\DI\DefinitionInterface;
 use Georgeff\Database\Contract\DatabaseManagerInterface;
 use Junction\Api\Event\EventModule;
 use Junction\Api\Event\EventRepositoryInterface;
+use Junction\Api\Event\Command\FindManyOrCreateHandler;
 use Junction\Api\Event\Command\FindOrCreateHandler;
 use Junction\Api\Event\Command\UpdateHandler;
 use Junction\Api\Event\Repository\PostgresEventRepository;
@@ -20,7 +21,7 @@ final class EventModuleTest extends TestCase
         $definition = $this->createMock(DefinitionInterface::class);
 
         $kernel = $this->createMock(KernelInterface::class);
-        $kernel->expects($this->exactly(3))
+        $kernel->expects($this->exactly(4))
             ->method('define')
             ->willReturn($definition);
 
@@ -47,6 +48,17 @@ final class EventModuleTest extends TestCase
         $container->method('get')->with(EventRepositoryInterface::class)->willReturn($repo);
 
         $this->assertInstanceOf(FindOrCreateHandler::class, $factories[FindOrCreateHandler::class]($container));
+    }
+
+    public function test_factory_produces_find_many_or_create_handler(): void
+    {
+        [$factories] = $this->captureFactories();
+
+        $repo = $this->createMock(EventRepositoryInterface::class);
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('get')->with(EventRepositoryInterface::class)->willReturn($repo);
+
+        $this->assertInstanceOf(FindManyOrCreateHandler::class, $factories[FindManyOrCreateHandler::class]($container));
     }
 
     public function test_factory_produces_update_handler(): void

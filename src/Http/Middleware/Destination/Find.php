@@ -1,17 +1,17 @@
 <?php
 
-namespace Junction\Api\Http\Middleware;
+namespace Junction\Api\Http\Middleware\Destination;
 
-use Meritum\Validation\Rule\Uuid;
+use Georgeff\Bus\DispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Meritum\Http\Exception\NotFoundHttpException;
+use Junction\Api\Destination\Command\QueryFind;
 
-final class ValidateUuidId implements MiddlewareInterface
+final class Find implements MiddlewareInterface
 {
-    public function __construct(private readonly Uuid $uuid) {}
+    public function __construct(private readonly DispatcherInterface $dispatcher) {}
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -19,9 +19,9 @@ final class ValidateUuidId implements MiddlewareInterface
 
         assert(is_string($id));
 
-        if (false === $this->uuid->validate($id)) {
-            throw new NotFoundHttpException($request, 'The requested resource was not found');
-        }
+        $data = $this->dispatcher->dispatch(new QueryFind($id));
+
+        $request = $request->withAttribute('data', $data);
 
         return $handler->handle($request);
     }

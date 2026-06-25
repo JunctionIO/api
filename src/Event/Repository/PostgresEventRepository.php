@@ -40,6 +40,31 @@ final class PostgresEventRepository extends Repository implements EventRepositor
         return $this->findBy('name', $name);
     }
 
+    public function insertMany(array $models): Collection
+    {
+        if ([] === $models) {
+            throw new \LogicException('Models array cannot be empty');
+        }
+
+        $query = $this->db->insert()->into($models[0]->getTable());
+
+        $collect = [];
+
+        foreach ($models as $model) {
+            $model->setPrimaryKeyValue($this->generateUuid());
+
+            $model->touchTimestamps();
+
+            $query->addRow($model->getDirty());
+
+            $collect[$model->id] = $model;
+        }
+
+        $this->db->fetchAffected($query);
+
+        return new Collection($collect);
+    }
+
     protected function getModelClass(): string
     {
         return Event::class;

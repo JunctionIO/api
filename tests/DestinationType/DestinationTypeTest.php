@@ -100,4 +100,84 @@ final class DestinationTypeTest extends TestCase
 
         $this->assertSame($schema, $type->configSchema);
     }
+
+    public function test_get_config_schema_validation_rules_maps_required_fields(): void
+    {
+        $type = new DestinationType([
+            'id'            => 'uuid-123',
+            'name'          => 'http',
+            'queue'         => 'http_queue',
+            'config_schema' => [
+                'url' => ['required' => true, 'rules' => ['string', 'url']],
+            ],
+        ]);
+
+        $rules = $type->getConfigSchemaValidationRules();
+
+        $this->assertSame(['required', 'string', 'url'], $rules['config.url']);
+    }
+
+    public function test_get_config_schema_validation_rules_maps_optional_fields(): void
+    {
+        $type = new DestinationType([
+            'id'            => 'uuid-123',
+            'name'          => 'http',
+            'queue'         => 'http_queue',
+            'config_schema' => [
+                'auth_header' => ['required' => false, 'rules' => ['string']],
+            ],
+        ]);
+
+        $rules = $type->getConfigSchemaValidationRules();
+
+        $this->assertSame(['string'], $rules['config.auth_header']);
+    }
+
+    public function test_get_config_schema_validation_rules_maps_multiple_fields(): void
+    {
+        $type = new DestinationType([
+            'id'            => 'uuid-123',
+            'name'          => 'http',
+            'queue'         => 'http_queue',
+            'config_schema' => [
+                'url'         => ['required' => true,  'rules' => ['string', 'url']],
+                'auth_header' => ['required' => false, 'rules' => ['string']],
+                'auth_token'  => ['required' => false, 'rules' => ['string']],
+            ],
+        ]);
+
+        $rules = $type->getConfigSchemaValidationRules();
+
+        $this->assertSame(['required', 'string', 'url'], $rules['config.url']);
+        $this->assertSame(['string'], $rules['config.auth_header']);
+        $this->assertSame(['string'], $rules['config.auth_token']);
+    }
+
+    public function test_get_config_schema_validation_rules_supports_parameterized_rules(): void
+    {
+        $type = new DestinationType([
+            'id'            => 'uuid-123',
+            'name'          => 'http',
+            'queue'         => 'http_queue',
+            'config_schema' => [
+                'slug' => ['required' => true, 'rules' => ['string', ['regex' => '/^[a-z0-9-]+$/']]],
+            ],
+        ]);
+
+        $rules = $type->getConfigSchemaValidationRules();
+
+        $this->assertSame(['required', 'string', ['regex' => '/^[a-z0-9-]+$/']], $rules['config.slug']);
+    }
+
+    public function test_get_config_schema_validation_rules_returns_empty_array_for_empty_schema(): void
+    {
+        $type = new DestinationType([
+            'id'            => 'uuid-123',
+            'name'          => 'http',
+            'queue'         => 'http_queue',
+            'config_schema' => [],
+        ]);
+
+        $this->assertSame([], $type->getConfigSchemaValidationRules());
+    }
 }

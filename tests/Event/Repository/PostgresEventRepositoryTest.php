@@ -3,6 +3,7 @@
 namespace Junction\Api\Test\Event\Repository;
 
 use PHPUnit\Framework\TestCase;
+use Georgeff\Database\Contract\InsertInterface;
 use Georgeff\Database\Contract\SelectInterface;
 use Georgeff\Database\Contract\DatabaseManagerInterface;
 use Meritum\Database\Support\Collection;
@@ -201,6 +202,96 @@ final class PostgresEventRepositoryTest extends TestCase
         $db->method('fetchAll')->willReturn([]);
 
         (new PostgresEventRepository($db))->getByName(['event.one'], ['id', 'name']);
+    }
+
+    public function test_insert_many_returns_collection_of_created_models(): void
+    {
+        $insert = $this->createMock(InsertInterface::class);
+        $insert->method('into')->willReturn($insert);
+        $insert->method('addRow')->willReturn($insert);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('insert')->willReturn($insert);
+        $db->method('fetchAffected')->willReturn(2);
+
+        $m1 = new Event();
+        $m1->name = 'order.placed';
+
+        $m2 = new Event();
+        $m2->name = 'order.shipped';
+
+        $result = (new PostgresEventRepository($db))->insertMany([$m1, $m2]);
+
+        $this->assertInstanceOf(Collection::class, $result);
+        $this->assertCount(2, $result);
+    }
+
+    public function test_insert_many_assigns_uuid_to_each_model(): void
+    {
+        $insert = $this->createMock(InsertInterface::class);
+        $insert->method('into')->willReturn($insert);
+        $insert->method('addRow')->willReturn($insert);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('insert')->willReturn($insert);
+        $db->method('fetchAffected')->willReturn(1);
+
+        $m = new Event();
+        $m->name = 'order.placed';
+
+        (new PostgresEventRepository($db))->insertMany([$m]);
+
+        $this->assertNotEmpty($m->id);
+        $this->assertMatchesRegularExpression(
+            '/^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/',
+            $m->id
+        );
+    }
+
+    public function test_insert_many_calls_add_row_for_each_model(): void
+    {
+        $insert = $this->createMock(InsertInterface::class);
+        $insert->method('into')->willReturn($insert);
+        $insert->expects($this->exactly(2))->method('addRow')->willReturn($insert);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('insert')->willReturn($insert);
+        $db->method('fetchAffected')->willReturn(2);
+
+        $m1 = new Event();
+        $m1->name = 'order.placed';
+
+        $m2 = new Event();
+        $m2->name = 'order.shipped';
+
+        (new PostgresEventRepository($db))->insertMany([$m1, $m2]);
+    }
+
+    public function test_insert_many_throws_when_given_empty_array(): void
+    {
+        $db = $this->createMock(DatabaseManagerInterface::class);
+
+        $this->expectException(\LogicException::class);
+
+        (new PostgresEventRepository($db))->insertMany([]);
+    }
+
+    public function test_insert_many_keys_collection_by_model_id(): void
+    {
+        $insert = $this->createMock(InsertInterface::class);
+        $insert->method('into')->willReturn($insert);
+        $insert->method('addRow')->willReturn($insert);
+
+        $db = $this->createMock(DatabaseManagerInterface::class);
+        $db->method('insert')->willReturn($insert);
+        $db->method('fetchAffected')->willReturn(1);
+
+        $m = new Event();
+        $m->name = 'order.placed';
+
+        $result = (new PostgresEventRepository($db))->insertMany([$m]);
+
+        $this->assertArrayHasKey($m->id, $result->toArray());
     }
 
     public function test_generates_uuid_v7(): void

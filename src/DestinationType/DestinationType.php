@@ -77,4 +77,26 @@ final class DestinationType extends Model
             return $this->getAttribute('updated_at');
         }
     }
+
+    /**
+     * @return array<string, array<int|string, mixed>>
+     */
+    public function getConfigSchemaValidationRules(): array
+    {
+        $rules = [];
+
+        foreach ($this->configSchema as $field => $schema) {
+            $field = "config.{$field}";
+
+            if ($schema['required']) {
+                $rules[$field][] = 'required';
+            }
+
+            foreach ($schema['rules'] as $r) {
+                $rules[$field][] = $r;
+            }
+        }
+
+        return $rules;
+    }
 }

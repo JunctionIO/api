@@ -17,11 +17,13 @@ final class ModuleRepository implements ModuleRepositoryInterface
     {
         return [
             new AppModule(),
+            new Bus\BusModule(),
             new Http\HttpModule(),
             new Trace\TraceModule(),
             new Event\EventModule(),
             new EventLog\EventLogModule(),
             new Exception\ExceptionModule(),
+            new Destination\DestinationModule(),
             new DestinationType\DestinationTypeModule(),
             new \Meritum\Database\DatabaseModule(),
             new \Meritum\Validation\ValidationModule(),
@@ -29,7 +31,7 @@ final class ModuleRepository implements ModuleRepositoryInterface
             new \Meritum\StructuredLogging\StructuredLoggingModule(),
             new \Meritum\Serialization\SerializationModule(),
             new \Meritum\HttpExceptionHandler\ExceptionHandlerModule(),
-            new \Meritum\BusModule\BusModule(false),
+            new \Meritum\BusModule\BusModule(),
         ];
     }
 }

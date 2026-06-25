@@ -10,6 +10,7 @@ use Georgeff\Kernel\Module\ModuleInterface;
 use Meritum\StructuredLogging\CorrelationId;
 use Meritum\Serialization\FormatterInterface;
 use Junction\Api\Event\EventRepositoryInterface;
+use Junction\Api\Destination\DestinationRepositoryInterface;
 use Junction\Api\DestinationType\DestinationTypeRepositoryInterface;
 
 final class HttpModule implements ModuleInterface
@@ -19,11 +20,6 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Middleware\Correlation::class,
             fn(ContainerInterface $c) => new Middleware\Correlation($c->get(CorrelationId::class))
-        );
-
-        $kernel->define(
-            Middleware\ValidateUuidId::class,
-            fn(ContainerInterface $c) => new Middleware\ValidateUuidId($c->get(\Meritum\Validation\Rule\Uuid::class))
         );
 
         $kernel->define(
@@ -77,6 +73,52 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Middleware\DestinationType\Find::class,
             fn(ContainerInterface $c) => new Middleware\DestinationType\Find($c->get(DestinationTypeRepositoryInterface::class))
+        );
+
+        // Destination Middleware
+        $kernel->define(
+            Middleware\Destination\CreateValidator::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\CreateValidator($c->get(Validator::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\UpdateValidator::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\UpdateValidator($c->get(Validator::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\All::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\All($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\Create::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\Create($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\Update::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\Update($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\Find::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\Find($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\Delete::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\Delete($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\FindForUpdate::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\FindForUpdate($c->get(DestinationRepositoryInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Destination\FindDestinationType::class,
+            fn(ContainerInterface $c) => new Middleware\Destination\FindDestinationType($c->get(DestinationTypeRepositoryInterface::class))
         );
     }
 }

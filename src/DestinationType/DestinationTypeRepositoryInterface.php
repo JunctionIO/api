@@ -24,6 +24,8 @@ interface DestinationTypeRepositoryInterface extends RepositoryInterface
     public function getByIds(array $ids, array $columns = ['*']): Collection;
 
     /**
+     * @param string[] $columns
+     *
      * @throws \Meritum\Database\Exception\ModelNotFoundException
      */
     public function findById(string $id, array $columns = ['*']): DestinationType;

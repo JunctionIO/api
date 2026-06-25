@@ -27,6 +27,9 @@ final class PostgresDestinationTypeRepository extends Repository implements Dest
         return $this->get();
     }
 
+    /**
+     * @param string[] $columns
+     */
     public function findById(string $id, array $columns = ['*']): DestinationType
     {
         $this->query($columns)->where('id', $id);

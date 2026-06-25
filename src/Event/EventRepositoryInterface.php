@@ -33,4 +33,11 @@ interface EventRepositoryInterface extends RepositoryInterface
     public function getByName(array $names, array $columns = ['*']): Collection;
 
     public function findByName(string $name): ?Event;
+
+    /**
+     * @param Event[] $models
+     *
+     * @return Collection<Event>
+     */
+    public function insertMany(array $models): Collection;
 }

@@ -22,6 +22,11 @@ final class EventModule implements ModuleInterface
         );
 
         $kernel->define(
+            Command\FindManyOrCreateHandler::class,
+            fn(ContainerInterface $c) => new Command\FindManyOrCreateHandler($c->get(EventRepositoryInterface::class))
+        );
+
+        $kernel->define(
             Command\UpdateHandler::class,
             fn(ContainerInterface $c) => new Command\UpdateHandler($c->get(EventRepositoryInterface::class))
         );
