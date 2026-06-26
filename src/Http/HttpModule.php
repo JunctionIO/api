@@ -6,6 +6,7 @@ use Meritum\Validation\Validator;
 use Georgeff\Kernel\KernelInterface;
 use Psr\Container\ContainerInterface;
 use Georgeff\Bus\DispatcherInterface;
+use Junction\Api\Queue\QueueInterface;
 use Georgeff\Kernel\Module\ModuleInterface;
 use Meritum\StructuredLogging\CorrelationId;
 use Meritum\Serialization\FormatterInterface;
@@ -83,6 +84,11 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Middleware\DestinationType\Upsert::class,
             fn(ContainerInterface $c) => new Middleware\DestinationType\Upsert($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\DestinationType\DeclareQueue::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationType\DeclareQueue($c->get(QueueInterface::class))
         );
 
         // Destination Middleware

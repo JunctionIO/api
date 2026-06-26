@@ -36,7 +36,8 @@ final class AppModule implements ModuleInterface
         // System Routes
         $kernel->addRoute('POST', '/system/destination-types/register', new EmptyResponseHandler())
                ->addMiddleware(Http\Middleware\DestinationType\UpsertValidator::class)
-               ->addMiddleware(Http\Middleware\DestinationType\Upsert::class);
+               ->addMiddleware(Http\Middleware\DestinationType\Upsert::class)
+               ->addMiddleware(Http\Middleware\DestinationType\DeclareQueue::class);
 
         $kernel->addRoute('POST', '/system/status', new EmptyResponseHandler())
                ->addMiddleware(Http\Middleware\DestinationLog\UpdateValidator::class)
