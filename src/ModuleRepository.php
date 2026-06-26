@@ -20,6 +20,7 @@ final class ModuleRepository implements ModuleRepositoryInterface
             new Bus\BusModule(),
             new Http\HttpModule(),
             new Trace\TraceModule(),
+            new Queue\QueueModule(),
             new Event\EventModule(),
             new Context\ContextModule(),
             new EventLog\EventLogModule(),

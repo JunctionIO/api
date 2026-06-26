@@ -17,6 +17,10 @@ in {
     initialDatabases = [{ name = "junction"; user = "junction"; pass = "junction"; }];
   };
 
+  services.rabbitmq = {
+    enable = !config.container.isBuilding;
+  };
+
   processes.web.exec = "stdbuf -oL php -S 0.0.0.0:8000 -t www 2>/dev/null | jq --unbuffered -R 'try fromjson catch .'";
 
   enterShell = ''
