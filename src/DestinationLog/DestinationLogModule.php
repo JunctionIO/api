@@ -35,5 +35,10 @@ final class DestinationLogModule implements ModuleInterface
                 $c->get(DestinationRepositoryInterface::class)
             )
         );
+
+        $kernel->define(
+            Command\UpdateHandler::class,
+            fn(ContainerInterface $c) => new Command\UpdateHandler($c->get(DestinationLogRepositoryInterface::class))
+        );
     }
 }

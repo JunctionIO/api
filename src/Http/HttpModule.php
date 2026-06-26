@@ -151,5 +151,15 @@ final class HttpModule implements ModuleInterface
             Middleware\DestinationLog\AllForDestination::class,
             fn(ContainerInterface $c) => new Middleware\DestinationLog\AllForDestination($c->get(DispatcherInterface::class))
         );
+
+        $kernel->define(
+            Middleware\DestinationLog\UpdateValidator::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationLog\UpdateValidator($c->get(Validator::class))
+        );
+
+        $kernel->define(
+            Middleware\DestinationLog\Update::class,
+            fn(ContainerInterface $c) => new Middleware\DestinationLog\Update($c->get(DispatcherInterface::class))
+        );
     }
 }
