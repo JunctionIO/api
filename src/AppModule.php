@@ -35,58 +35,70 @@ final class AppModule implements ModuleInterface
 
         // System Routes
         $kernel->addRoute('POST', '/system/destination-types/register', new EmptyResponseHandler())
+               ->addMiddleware('api.token.system')
                ->addMiddleware(Http\Middleware\DestinationType\UpsertValidator::class)
                ->addMiddleware(Http\Middleware\DestinationType\Upsert::class)
                ->addMiddleware(Http\Middleware\DestinationType\DeclareQueue::class);
 
         $kernel->addRoute('POST', '/system/status', new EmptyResponseHandler())
+               ->addMiddleware('api.token.system')
                ->addMiddleware(Http\Middleware\DestinationLog\UpdateValidator::class)
                ->addMiddleware(Http\Middleware\DestinationLog\Update::class);
 
         // Management Routes
         $kernel->addRoute('GET', '/v0/events', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(new ParsePaginationQuery())
                ->addMiddleware(Http\Middleware\Event\All::class)
                ->addMiddleware(new CreateResource(new EventSerializer()));
 
         $kernel->addRoute('GET', '/v0/events/{id}', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\Event\Find::class)
                ->addMiddleware(new CreateResource(new EventSerializer()));
 
         $kernel->addRoute('PATCH', '/v0/events/{id}', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\Event\Validator::class)
                ->addMiddleware(Http\Middleware\Event\Update::class)
                ->addMiddleware(new CreateResource(new EventSerializer()));
 
         $kernel->addRoute('GET', '/v0/event-logs', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(new ParsePaginationQuery())
                ->addMiddleware(Http\Middleware\EventLog\ParseEventFilter::class)
                ->addMiddleware(Http\Middleware\EventLog\All::class)
                ->addMiddleware(new CreateResource(new EventLogSerializer()));
 
         $kernel->addRoute('GET', '/v0/event-logs/{id}', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\EventLog\Find::class)
                ->addMiddleware(new CreateResource(new EventLogSerializer()));
 
         $kernel->addRoute('GET', '/v0/event-logs/{id}/destinations', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(new ParsePaginationQuery())
                ->addMiddleware(Http\Middleware\DestinationLog\AllForEventLog::class)
                ->addMiddleware(new CreateResource(new DestinationLogSerializer()));
 
         $kernel->addRoute('GET', '/v0/destination-types', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\DestinationType\All::class)
                ->addMiddleware(new CreateResource(new DestinationTypeSerializer()));
 
         $kernel->addRoute('GET', '/v0/destination-types/{id}', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\DestinationType\Find::class)
                ->addMiddleware(new CreateResource(new DestinationTypeSerializer()));
 
         $kernel->addRoute('GET', '/v0/destinations', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(new ParsePaginationQuery())
                ->addMiddleware(Http\Middleware\Destination\All::class)
                ->addMiddleware(new CreateResource(new DestinationSerializer()));
 
         $kernel->addRoute('POST', '/v0/destinations', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\Destination\FindDestinationType::class)
                ->addMiddleware(Http\Middleware\Destination\CreateValidator::class)
                ->addMiddleware(Http\Middleware\Destination\Create::class)
@@ -94,10 +106,12 @@ final class AppModule implements ModuleInterface
                ->addMiddleware(new SetStatusCode(201));
 
         $kernel->addRoute('GET', '/v0/destinations/{id}', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\Destination\Find::class)
                ->addMiddleware(new CreateResource(new DestinationSerializer()));
 
         $kernel->addRoute('PATCH', '/v0/destinations/{id}', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\Destination\FindForUpdate::class)
                ->addMiddleware(Http\Middleware\Destination\FindDestinationType::class)
                ->addMiddleware(Http\Middleware\Destination\UpdateValidator::class)
@@ -105,14 +119,17 @@ final class AppModule implements ModuleInterface
                ->addMiddleware(new CreateResource(new DestinationSerializer()));
 
         $kernel->addRoute('DELETE', '/v0/destinations/{id}', new EmptyResponseHandler())
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\Destination\Delete::class);
 
         $kernel->addRoute('PUT', '/v0/destinations/{id}/events', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(Http\Middleware\Destination\UpdateEventsValidator::class)
                ->addMiddleware(Http\Middleware\Destination\UpdateEvents::class)
                ->addMiddleware(new CreateResource(new DestinationSerializer()));
 
         $kernel->addRoute('GET', '/v0/destinations/{id}/event-logs', JsonResponseHandler::class)
+               ->addMiddleware('api.token.management')
                ->addMiddleware(new ParsePaginationQuery())
                ->addMiddleware(Http\Middleware\DestinationLog\AllForDestination::class)
                ->addMiddleware(new CreateResource(new DestinationLogSerializer()));

@@ -5,6 +5,7 @@
   "license": "MIT",
   "require": {
     "php": "^8.4",
+    "firebase/php-jwt": "^7.1",
     "meritum/bus-module": "^1.0",
     "meritum/database": "^1.2",
     "meritum/http": "^1.2",

@@ -7,6 +7,7 @@ use Georgeff\Kernel\KernelInterface;
 use Psr\Container\ContainerInterface;
 use Georgeff\Bus\DispatcherInterface;
 use Junction\Api\Queue\QueueInterface;
+use Junction\Api\ApiToken\DecoderInterface;
 use Georgeff\Kernel\Module\ModuleInterface;
 use Meritum\StructuredLogging\CorrelationId;
 use Meritum\Serialization\FormatterInterface;
@@ -26,6 +27,22 @@ final class HttpModule implements ModuleInterface
         $kernel->define(
             Handler\JsonResponseHandler::class,
             fn(ContainerInterface $c) => new Handler\JsonResponseHandler($c->get(FormatterInterface::class))
+        );
+
+        // API Token
+        $kernel->define(
+            'api.token.relay',
+            fn(ContainerInterface $c) => new Middleware\ValidateApiToken($c->get(DecoderInterface::class), 'relay')
+        );
+
+        $kernel->define(
+            'api.token.system',
+            fn(ContainerInterface $c) => new Middleware\ValidateApiToken($c->get(DecoderInterface::class), 'system')
+        );
+
+        $kernel->define(
+            'api.token.management',
+            fn(ContainerInterface $c) => new Middleware\ValidateApiToken($c->get(DecoderInterface::class), 'management')
         );
 
         // Relay Middleware

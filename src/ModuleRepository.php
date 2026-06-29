@@ -24,6 +24,7 @@ final class ModuleRepository implements ModuleRepositoryInterface
             new Event\EventModule(),
             new Relay\RelayModule(),
             new Context\ContextModule(),
+            new ApiToken\ApiTokenModule(),
             new EventLog\EventLogModule(),
             new Exception\ExceptionModule(),
             new Validation\ValidationModule(),
