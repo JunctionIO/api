@@ -33,6 +33,15 @@ final class AppModule implements ModuleInterface
         $kernel->addMiddleware(new ValidateContentType());
         $kernel->addMiddleware(new BodyParser());
 
+        $kernel->addRoute('POST', '/relay', new EmptyResponseHandler(202))
+               ->addMiddleware('api.token.relay')
+               ->addMiddleware(Http\Middleware\Relay\ResolveTraceId::class)
+               ->addMiddleware(Http\Middleware\Relay\ValidateEvent::class)
+               ->addMiddleware(Http\Middleware\Relay\Validate::class)
+               ->addMiddleware(Http\Middleware\Relay\FindEvent::class)
+               ->addMiddleware(Http\Middleware\Relay\CreateEventLog::class)
+               ->addMiddleware(Http\Middleware\Relay\Relay::class);
+
         // System Routes
         $kernel->addRoute('POST', '/system/destination-types/register', new EmptyResponseHandler())
                ->addMiddleware('api.token.system')

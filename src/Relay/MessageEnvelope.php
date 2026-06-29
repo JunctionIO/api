@@ -16,7 +16,7 @@ final class MessageEnvelope implements \JsonSerializable
     public readonly array $meta;
 
     /**
-     * @param array<string, mixed> $payload
+     * @param array<mixed> $payload
      */
     public function __construct(public readonly array $payload, string $traceId, string $logId, Destination $destination)
     {

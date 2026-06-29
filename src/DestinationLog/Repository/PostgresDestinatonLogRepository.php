@@ -4,6 +4,7 @@ namespace Junction\Api\DestinationLog\Repository;
 
 use Meritum\Database\Repository;
 use Meritum\Database\Support\Uuid;
+use Meritum\Database\Support\Collection;
 use Meritum\Database\Support\CursorPaginator;
 use Junction\Api\DestinationLog\DestinationLog;
 use Junction\Api\DestinationLog\DestinationLogRepositoryInterface;
@@ -25,6 +26,31 @@ final class PostgresDestinatonLogRepository extends Repository implements Destin
         $this->query()->where('destination_id', $destinationId);
 
         return $this->cursor($perPage, $cursor);
+    }
+
+    public function insertMany(array $models): Collection
+    {
+        if ([] === $models) {
+            throw new \LogicException('Models array cannot be empty');
+        }
+
+        $query = $this->db->insert()->into($models[0]->getTable());
+
+        $collect = [];
+
+        foreach ($models as $model) {
+            $model->setPrimaryKeyValue($this->generateUuid());
+
+            $model->touchTimestamps();
+
+            $query->addRow($model->getDirty());
+
+            $collect[$model->id] = $model;
+        }
+
+        $this->db->fetchAffected($query);
+
+        return new Collection($collect);
     }
 
     protected function getModelClass(): string

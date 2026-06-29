@@ -5,19 +5,21 @@ namespace Junction\Api\Test\Relay;
 use Georgeff\Bus\DispatcherInterface;
 use Georgeff\Kernel\DI\DefinitionInterface;
 use Georgeff\Kernel\KernelInterface;
+use Junction\Api\Queue\QueueInterface;
 use Junction\Api\Relay\Command\QueryEventHandler;
+use Junction\Api\Relay\Command\RelayHandler;
 use Junction\Api\Relay\RelayModule;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 
 final class RelayModuleTest extends TestCase
 {
-    public function test_registers_one_definition(): void
+    public function test_registers_two_definitions(): void
     {
         $definition = $this->createMock(DefinitionInterface::class);
 
         $kernel = $this->createMock(KernelInterface::class);
-        $kernel->expects($this->exactly(1))
+        $kernel->expects($this->exactly(2))
             ->method('define')
             ->willReturn($definition);
 
@@ -35,6 +37,22 @@ final class RelayModuleTest extends TestCase
         $this->assertInstanceOf(
             QueryEventHandler::class,
             $factories[QueryEventHandler::class]($container)
+        );
+    }
+
+    public function test_factory_produces_relay_handler(): void
+    {
+        [$factories] = $this->captureFactories();
+
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('get')->willReturnMap([
+            [QueueInterface::class, $this->createMock(QueueInterface::class)],
+            [DispatcherInterface::class, $this->createMock(DispatcherInterface::class)],
+        ]);
+
+        $this->assertInstanceOf(
+            RelayHandler::class,
+            $factories[RelayHandler::class]($container)
         );
     }
 

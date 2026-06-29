@@ -2,6 +2,7 @@
 
 namespace Junction\Api\DestinationLog;
 
+use Meritum\Database\Support\Collection;
 use Meritum\Database\RepositoryInterface;
 use Meritum\Database\Support\CursorPaginator;
 
@@ -19,4 +20,11 @@ interface DestinationLogRepositoryInterface extends RepositoryInterface
      * @return CursorPaginator<DestinationLog>
      */
     public function getByDestination(string $destinationId, int $perPage, ?string $cursor = null): CursorPaginator;
+
+    /**
+     * @param DestinationLog[] $models
+     *
+     * @return Collection<DestinationLog>
+     */
+    public function insertMany(array $models): Collection;
 }

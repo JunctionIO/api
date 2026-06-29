@@ -86,7 +86,7 @@ final class ResolveTraceIdTest extends TestCase
         $request->method('getHeaderLine')->willReturn('');
         $request->expects($this->once())
             ->method('withAttribute')
-            ->with(TraceId::class, $this->validUuid)
+            ->with(TraceId::class, $traceId)
             ->willReturn($newRequest);
 
         $handler = $this->createMock(RequestHandlerInterface::class);

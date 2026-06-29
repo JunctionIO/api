@@ -5,7 +5,7 @@ namespace Junction\Api\EventLog\Command;
 final class Create
 {
     /**
-     * @param array<string, mixed> $payload
+     * @param array<mixed> $payload
      */
     public function __construct(
         public readonly string $traceId,

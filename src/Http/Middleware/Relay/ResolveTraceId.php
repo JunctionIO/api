@@ -23,7 +23,7 @@ final class ResolveTraceId implements MiddlewareInterface
             $this->id->set($id);
         }
 
-        $request = $request->withAttribute(TraceId::class, (string) $this->id);
+        $request = $request->withAttribute(TraceId::class, $this->id);
 
         $response = $handler->handle($request);
 

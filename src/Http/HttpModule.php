@@ -54,11 +54,26 @@ final class HttpModule implements ModuleInterface
             )
         );
 
+        $kernel->define(
+            Middleware\Relay\Validate::class,
+            fn(ContainerInterface $c) => new Middleware\Relay\Validate($c->get(Validator::class))
+        );
+
+        $kernel->define(
+            Middleware\Relay\CreateEventLog::class,
+            fn(ContainerInterface $c) => new Middleware\Relay\CreateEventLog($c->get(DispatcherInterface::class))
+        );
+
         $kernel->define(Middleware\Relay\ValidateEvent::class, fn() => new Middleware\Relay\ValidateEvent());
 
         $kernel->define(
             Middleware\Relay\FindEvent::class,
             fn(ContainerInterface $c) => new Middleware\Relay\FindEvent($c->get(DispatcherInterface::class))
+        );
+
+        $kernel->define(
+            Middleware\Relay\Relay::class,
+            fn(ContainerInterface $c) => new Middleware\Relay\Relay($c->get(DispatcherInterface::class))
         );
 
         // Event Middelware
