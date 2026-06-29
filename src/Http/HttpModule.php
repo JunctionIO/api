@@ -28,6 +28,22 @@ final class HttpModule implements ModuleInterface
             fn(ContainerInterface $c) => new Handler\JsonResponseHandler($c->get(FormatterInterface::class))
         );
 
+        // Relay Middleware
+        $kernel->define(
+            Middleware\Relay\ResolveTraceId::class,
+            fn(ContainerInterface $c) => new Middleware\Relay\ResolveTraceId(
+                $c->get(\Junction\Api\Trace\TraceId::class),
+                $c->get(\Meritum\Validation\Rule\Uuid::class)
+            )
+        );
+
+        $kernel->define(Middleware\Relay\ValidateEvent::class, fn() => new Middleware\Relay\ValidateEvent());
+
+        $kernel->define(
+            Middleware\Relay\FindEvent::class,
+            fn(ContainerInterface $c) => new Middleware\Relay\FindEvent($c->get(DispatcherInterface::class))
+        );
+
         // Event Middelware
         $kernel->define(
             Middleware\Event\All::class,

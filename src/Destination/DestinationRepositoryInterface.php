@@ -25,6 +25,13 @@ interface DestinationRepositoryInterface extends RepositoryInterface
     public function getByIds(array $ids, array $columns = ['*']): Collection;
 
     /**
+     * @param string[] $columns
+     *
+     * @return Collection<Destination>
+     */
+    public function getActiveByEvent(string $eventId, array $columns = ['*']): Collection;
+
+    /**
      * @return string[]
      */
     public function getEventIds(string $id): array;

@@ -66,5 +66,13 @@ final class DestinationModule implements ModuleInterface
                 $c->get(DestinationRepositoryInterface::class)
             )
         );
+
+        $kernel->define(
+            Command\QueryActiveByEventHandler::class,
+            fn(ContainerInterface $c) => new Command\QueryActiveByEventHandler(
+                $c->get(DestinationRepositoryInterface::class),
+                $c->get(DestinationTypeRepositoryInterface::class)
+            )
+        );
     }
 }

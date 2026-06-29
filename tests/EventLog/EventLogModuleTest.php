@@ -10,6 +10,7 @@ use Georgeff\Database\Contract\DatabaseManagerInterface;
 use Junction\Api\Event\EventRepositoryInterface;
 use Junction\Api\EventLog\EventLogModule;
 use Junction\Api\EventLog\EventLogRepositoryInterface;
+use Junction\Api\EventLog\Command\CreateHandler;
 use Junction\Api\EventLog\Command\QueryAllHandler;
 use Junction\Api\EventLog\Command\QueryFindHandler;
 use Junction\Api\EventLog\Repository\PostgresEventLogRepository;
@@ -21,7 +22,7 @@ final class EventLogModuleTest extends TestCase
         $definition = $this->createMock(DefinitionInterface::class);
 
         $kernel = $this->createMock(KernelInterface::class);
-        $kernel->expects($this->exactly(3))
+        $kernel->expects($this->exactly(4))
             ->method('define')
             ->willReturn($definition);
 
@@ -71,6 +72,21 @@ final class EventLogModuleTest extends TestCase
         $this->assertInstanceOf(
             QueryAllHandler::class,
             $factories[QueryAllHandler::class]($container)
+        );
+    }
+
+    public function test_factory_produces_create_handler(): void
+    {
+        [$factories] = $this->captureFactories();
+
+        $container = $this->createMock(ContainerInterface::class);
+        $container->method('get')->willReturnMap([
+            [EventLogRepositoryInterface::class, $this->createMock(EventLogRepositoryInterface::class)],
+        ]);
+
+        $this->assertInstanceOf(
+            CreateHandler::class,
+            $factories[CreateHandler::class]($container)
         );
     }
 

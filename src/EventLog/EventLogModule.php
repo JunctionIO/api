@@ -33,5 +33,10 @@ final class EventLogModule implements ModuleInterface
                 $c->get(EventRepositoryInterface::class)
             )
         );
+
+        $kernel->define(
+            Command\CreateHandler::class,
+            fn(ContainerInterface $c) => new Command\CreateHandler($c->get(EventLogRepositoryInterface::class))
+        );
     }
 }

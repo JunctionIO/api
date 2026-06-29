@@ -3,6 +3,8 @@
 namespace Junction\Api\Event;
 
 use Meritum\Database\Model;
+use Meritum\Database\Support\Collection;
+use Junction\Api\Destination\Destination;
 
 final class Event extends Model
 {
@@ -52,5 +54,26 @@ final class Event extends Model
             /** @var \DateTimeInterface */
             return $this->getAttribute('updated_at');
         }
+    }
+
+    /**
+     * @param Collection<Destination> $destinations
+     */
+    public function setDestinations(Collection $destinations): void
+    {
+        $this->setRelation('destinations', $destinations);
+    }
+
+    /**
+     * @return Collection<Destination>
+     */
+    public function getDestinations(): Collection
+    {
+        if (false === $this->hasRelation('destinations')) {
+            throw new \LogicException('Relation destinations has not been set');
+        }
+
+        /** @var Collection<Destination> */
+        return $this->getRelation('destinations');
     }
 }

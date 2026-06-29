@@ -28,6 +28,27 @@ final class PostgrestDestinationRepository extends Repository implements Destina
         return $this->get();
     }
 
+    public function getActiveByEvent(string $eventId, array $columns = ['*']): Collection
+    {
+        $query = $this->db
+                      ->select(['destination_id'])
+                      ->from('destination_events')
+                      ->where('event_id', $eventId);
+
+        /** @var array<int, array{destination_id: string}> */
+        $results = $this->db->fetchAll($query);
+
+        $ids = [];
+
+        foreach ($results as $result) {
+            $ids[] = $result['destination_id'];
+        }
+
+        $this->query($columns)->where('status', 'active')->whereIn('id', $ids);
+
+        return $this->get();
+    }
+
     public function getEventIds(string $id): array
     {
         $query = $this->db
