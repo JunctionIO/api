@@ -15,5 +15,10 @@ final class ExceptionModule implements ModuleInterface
             Translator\ModelNotFoundHandler::class,
             fn(ContainerInterface $c) => new Translator\ModelNotFoundHandler($c->get(ServerRequestInterface::class))
         )->tag('exception.translator.handlers');
+
+        $kernel->define(
+            Translator\JunctionDomainHandler::class,
+            fn() => new Translator\JunctionDomainHandler()
+        )->tag('exception.translator.handlers');
     }
 }
