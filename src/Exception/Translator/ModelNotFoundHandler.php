@@ -28,6 +28,6 @@ final class ModelNotFoundHandler implements TranslationHandler
 
     public function priority(): int
     {
-        return 0;
+        return 5;
     }
 }

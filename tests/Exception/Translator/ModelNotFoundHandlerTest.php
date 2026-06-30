@@ -68,10 +68,10 @@ final class ModelNotFoundHandlerTest extends TestCase
         $this->assertSame($original, $result->getPrevious()?->getPrevious());
     }
 
-    public function test_priority_returns_zero(): void
+    public function test_priority_returns_five(): void
     {
         $handler = new ModelNotFoundHandler($this->createMock(ServerRequestInterface::class));
 
-        $this->assertSame(0, $handler->priority());
+        $this->assertSame(5, $handler->priority());
     }
 }
