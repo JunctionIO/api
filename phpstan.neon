@@ -3,6 +3,3 @@ includes:
 
 parameters:
   level: max
-  memory_limit: -1
-  paths:
-    - src

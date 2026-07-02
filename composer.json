@@ -39,7 +39,7 @@
       "vendor/bin/phpunit"
     ],
     "analyze": [
-      "vendor/bin/phpstan"
+      "vendor/bin/phpstan analyze src --memory-limit=-1"
     ]
   }
 }
