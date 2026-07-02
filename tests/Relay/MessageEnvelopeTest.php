@@ -3,22 +3,36 @@
 namespace Junction\Api\Test\Relay;
 
 use Junction\Api\Destination\Destination;
+use Junction\Api\DestinationType\DestinationType;
 use Junction\Api\Relay\MessageEnvelope;
 use PHPUnit\Framework\TestCase;
 
 final class MessageEnvelopeTest extends TestCase
 {
-    private function makeDestination(string $name = 'My Webhook', array $config = ['url' => 'https://example.com']): Destination
+    private function makeDestination(string $typeName = 'http', array $config = ['url' => 'https://example.com']): Destination
     {
-        return new Destination([
+        $type = new DestinationType([
+            'id'            => 'type-uuid',
+            'name'          => $typeName,
+            'queue'         => $typeName,
+            'config_schema' => [],
+            'created_at'    => '2026-06-23 10:00:00',
+            'updated_at'    => '2026-06-23 10:00:00',
+        ]);
+
+        $dest = new Destination([
             'id'                  => 'dest-uuid',
-            'name'                => $name,
+            'name'                => 'My Webhook',
             'destination_type_id' => 'type-uuid',
             'config'              => $config,
             'status'              => 'active',
             'created_at'          => '2026-06-23 10:00:00',
             'updated_at'          => '2026-06-23 10:00:00',
         ]);
+
+        $dest->setDestinationType($type);
+
+        return $dest;
     }
 
     public function test_stores_payload(): void
@@ -42,12 +56,12 @@ final class MessageEnvelopeTest extends TestCase
         $this->assertSame('my-log-id', $envelope->meta['log_id']);
     }
 
-    public function test_meta_contains_destination_name(): void
+    public function test_meta_contains_destination_type(): void
     {
-        $dest     = $this->makeDestination('webhook-prod');
+        $dest     = $this->makeDestination('http');
         $envelope = new MessageEnvelope([], 'trace-id', 'log-id', $dest);
 
-        $this->assertSame('webhook-prod', $envelope->meta['destination']['name']);
+        $this->assertSame('http', $envelope->meta['destination']['type']);
     }
 
     public function test_meta_contains_destination_config(): void

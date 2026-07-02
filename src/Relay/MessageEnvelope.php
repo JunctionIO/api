@@ -10,7 +10,7 @@ final class MessageEnvelope implements \JsonSerializable
      * @var array{
      *      trace_id: string,
      *      log_id: string,
-     *      destination: array{name: string, config: array<string, mixed>}
+     *      destination: array{type: string, config: array<string, mixed>}
      * }
      */
     public readonly array $meta;
@@ -24,7 +24,7 @@ final class MessageEnvelope implements \JsonSerializable
             'trace_id'    => $traceId,
             'log_id'      => $logId,
             'destination' => [
-                'name'   => $destination->name,
+                'type'   => $destination->getDestinationType()->name,
                 'config' => $destination->config,
             ],
         ];
