@@ -43,7 +43,7 @@ final class AppModule implements ModuleInterface
                ->addMiddleware(Http\Middleware\Relay\Relay::class);
 
         // System Routes
-        $kernel->addRoute('POST', '/system/destination-types/register', new EmptyResponseHandler())
+        $kernel->addRoute('PUT', '/system/destination-types/register', new EmptyResponseHandler())
                ->addMiddleware('api.token.system')
                ->addMiddleware(Http\Middleware\DestinationType\UpsertValidator::class)
                ->addMiddleware(Http\Middleware\DestinationType\Upsert::class)
