@@ -29,7 +29,7 @@ final class UpdateHandlerTest extends TestCase
         return new Update(
             id: 'dlog-uuid',
             status: 'dispatched',
-            attemptedAt: '2026-06-26 10:00:00',
+            attemptedAt: '2026-06-26T10:00:00Z',
         );
     }
 
@@ -97,7 +97,7 @@ final class UpdateHandlerTest extends TestCase
 
     public function test_sets_error(): void
     {
-        $command = new Update('dlog-uuid', 'errored', '2026-06-26 10:00:00', 'Connection refused');
+        $command = new Update('dlog-uuid', 'errored', '2026-06-26T10:00:00Z', 'Connection refused');
 
         $result = (new UpdateHandler($this->makeRepo($this->makeLog())))($command);
 
@@ -111,12 +111,4 @@ final class UpdateHandlerTest extends TestCase
         $this->assertNull($result->error);
     }
 
-    public function test_throws_on_invalid_attempted_at_format(): void
-    {
-        $command = new Update('dlog-uuid', 'dispatched', 'not-a-date');
-
-        $this->expectException(\InvalidArgumentException::class);
-
-        (new UpdateHandler($this->makeRepo($this->makeLog())))($command);
-    }
 }

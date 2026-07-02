@@ -12,7 +12,7 @@ final class UpdateValidator extends AbstractValidator
         return [
             'log_id'       => ['required', 'string'],
             'status'       => ['required', 'string', 'in' => ['dispatched', 'errored']],
-            'attempted_at' => ['required', 'string', 'dateFormat' => ['Y-m-d H:i:s']],
+            'attempted_at' => ['required', 'string', 'dateFormat' => ['Y-m-d\TH:i:sp']],
             'error'        => ['nullable', 'string'],
         ];
     }

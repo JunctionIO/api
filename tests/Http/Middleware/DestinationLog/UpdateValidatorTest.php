@@ -31,7 +31,7 @@ final class UpdateValidatorTest extends TestCase
     public function test_attempted_at_rule(): void
     {
         $this->assertSame(
-            ['required', 'string', 'dateFormat' => ['Y-m-d H:i:s']],
+            ['required', 'string', 'dateFormat' => ['Y-m-d\TH:i:sp']],
             $this->rules()['attempted_at']
         );
     }

@@ -15,14 +15,8 @@ final class UpdateHandler
     {
         $model = $this->repo->findOrFail($command->id);
 
-        $attemptedAt = \DateTimeImmutable::createFromFormat('Y-m-d H:i:s', $command->attemptedAt);
-
-        if (false === $attemptedAt) {
-            throw new \InvalidArgumentException("Invalid attempted_at format: {$command->attemptedAt}");
-        }
-
         $model->status      = $command->status;
-        $model->attemptedAt = $attemptedAt;
+        $model->attemptedAt = new \DateTimeImmutable($command->attemptedAt);
         $model->error       = $command->error;
 
         $this->repo->save($model);
