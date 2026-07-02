@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+
+mkdir -p /tmp/php-ini
+
+cat > /tmp/php-ini/custom.ini << EOF
+memory_limit = ${PHP_MEMORY_LIMIT:-128M}
+max_execution_time = ${PHP_MAX_EXECUTION_TIME:-30}
+upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE:-2M}
+post_max_size = ${PHP_POST_MAX_SIZE:-8M}
+EOF
+
+export PHP_INI_SCAN_DIR=/tmp/php-ini
+
+cat > /tmp/php-fpm.conf << EOF
+[global]
+error_log = /dev/stderr
+daemonize = no
+
+[www]
+listen = 0.0.0.0:9000
+pm = ${PHP_FPM_PM:-dynamic}
+pm.max_children = ${PHP_FPM_PM_MAX_CHILDREN:-5}
+pm.start_servers = ${PHP_FPM_PM_START_SERVERS:-2}
+pm.min_spare_servers = ${PHP_FPM_PM_MIN_SPARE_SERVERS:-1}
+pm.max_spare_servers = ${PHP_FPM_PM_MAX_SPARE_SERVERS:-3}
+access.log = /dev/stdout
+EOF
+
+exec php-fpm --nodaemonize --fpm-config /tmp/php-fpm.conf
