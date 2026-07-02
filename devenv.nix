@@ -25,6 +25,7 @@ in {
 
   containers.api = {
     name = "api";
+    registry = "docker://ghcr.io/junctionio/";
     entrypoint = [ "/app/docker/entrypoint.sh" ];
     copyToRoot = pkgs.buildEnv {
       name = "api-app";
