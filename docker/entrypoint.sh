@@ -26,12 +26,19 @@ daemonize = no
 
 [www]
 listen = 0.0.0.0:9000
+; FPM clears the worker environment by default unless told not to -
+; without this, every getenv()-based config value (JWT_SECRET, DB_*,
+; QUEUE_*) silently reads back empty inside request handling, even
+; though the container's own env clearly has them set.
+clear_env = no
 pm = ${PHP_FPM_PM:-dynamic}
 pm.max_children = ${PHP_FPM_PM_MAX_CHILDREN:-5}
 pm.start_servers = ${PHP_FPM_PM_START_SERVERS:-2}
 pm.min_spare_servers = ${PHP_FPM_PM_MIN_SPARE_SERVERS:-1}
 pm.max_spare_servers = ${PHP_FPM_PM_MAX_SPARE_SERVERS:-3}
 access.log = /dev/stdout
+catch_workers_output = yes
+decorate_workers_output = no
 EOF
 
 exec php-fpm --nodaemonize --fpm-config /tmp/php-fpm.conf
