@@ -26,7 +26,14 @@ in {
   containers.api = {
     name = "api";
     registry = "docker://ghcr.io/junctionio/";
-    entrypoint = [ "/app/docker/entrypoint.sh" ];
+    # devenv's containers.<name>.copyToRoot lands under /env (the
+    # container's homeDir/workingDir), not container root, so the
+    # entrypoint script is actually at /env/app/docker/entrypoint.sh.
+    # Also, the container image has no PATH env var set at all (only
+    # DEVENV_* vars), so entrypoint.sh's own `exec php-fpm ...` (a bare
+    # command name) would fail to resolve - export PATH with php's
+    # absolute store path first.
+    entrypoint = [ "/bin/sh" "-c" "export PATH=\"${php}/bin:$PATH\"; exec /env/app/docker/entrypoint.sh" ];
     copyToRoot = pkgs.buildEnv {
       name = "api-app";
       paths = [
