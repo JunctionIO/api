@@ -683,16 +683,16 @@
         },
         {
             "name": "meritum/logger",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MeritumIO/logger.git",
-                "reference": "9386d672acd21349734816ab0d2f6bab8ac6ad66"
+                "reference": "34b2ea9632abe06eae93a0016effe88d078fa75b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MeritumIO/logger/zipball/9386d672acd21349734816ab0d2f6bab8ac6ad66",
-                "reference": "9386d672acd21349734816ab0d2f6bab8ac6ad66",
+                "url": "https://api.github.com/repos/MeritumIO/logger/zipball/34b2ea9632abe06eae93a0016effe88d078fa75b",
+                "reference": "34b2ea9632abe06eae93a0016effe88d078fa75b",
                 "shasum": ""
             },
             "require": {
@@ -726,9 +726,9 @@
             "description": "Minimal PSR-3 logger that writes newline-delimited JSON to stdout",
             "support": {
                 "issues": "https://github.com/MeritumIO/logger/issues",
-                "source": "https://github.com/MeritumIO/logger/tree/1.0.2"
+                "source": "https://github.com/MeritumIO/logger/tree/1.0.3"
             },
-            "time": "2026-06-19T20:48:44+00:00"
+            "time": "2026-07-03T14:13:01+00:00"
         },
         {
             "name": "meritum/serialization",
@@ -1970,11 +1970,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.3",
+            "version": "2.2.4",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4048833dd47b377287818841877fb3087289509c",
-                "reference": "4048833dd47b377287818841877fb3087289509c",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/f0fe3fb03bb53ce68cc2416785b260e62226ec27",
+                "reference": "f0fe3fb03bb53ce68cc2416785b260e62226ec27",
                 "shasum": ""
             },
             "require": {
@@ -2030,7 +2030,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-30T21:15:26+00:00"
+            "time": "2026-07-03T07:00:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
