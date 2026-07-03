@@ -10,7 +10,14 @@ upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE:-2M}
 post_max_size = ${PHP_POST_MAX_SIZE:-8M}
 EOF
 
-export PHP_INI_SCAN_DIR=/tmp/php-ini
+# NIX_PHP_INI_DIR (set by the container's entrypoint wrapper) points at
+# the Nix-built php's own ini scan dir, where all the enabled extensions'
+# .ini files live. Appending rather than replacing PHP_INI_SCAN_DIR keeps
+# those extensions loaded - overwriting it entirely leaves php-fpm with
+# none of them (e.g. filter_var() undefined), even though `php -m` looks
+# fine when php is invoked directly (that goes through its own baked-in
+# default scan dir, not this override).
+export PHP_INI_SCAN_DIR="/tmp/php-ini:${NIX_PHP_INI_DIR:-}"
 
 cat > /tmp/php-fpm.conf << EOF
 [global]

@@ -32,8 +32,9 @@ in {
     # Also, the container image has no PATH env var set at all (only
     # DEVENV_* vars), so entrypoint.sh's own `exec php-fpm ...` (a bare
     # command name) would fail to resolve - export PATH with php's
-    # absolute store path first.
-    entrypoint = [ "/bin/sh" "-c" "export PATH=\"${php}/bin:$PATH\"; exec /env/app/docker/entrypoint.sh" ];
+    # absolute store path first. NIX_PHP_INI_DIR points entrypoint.sh at
+    # this php's own ini scan dir (see docker/entrypoint.sh for why).
+    entrypoint = [ "/bin/sh" "-c" "export PATH=\"${php}/bin:$PATH\" NIX_PHP_INI_DIR=\"${php}/lib\"; exec /env/app/docker/entrypoint.sh" ];
     copyToRoot = pkgs.buildEnv {
       name = "api-app";
       paths = [
