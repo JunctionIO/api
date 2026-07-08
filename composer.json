@@ -1,6 +1,6 @@
 {
-  "name": "meritum/virtus",
-  "description": "Meritum HTTP API application scaffold",
+  "name": "junction/api",
+  "description": "Junction API Application",
   "type": "project",
   "license": "MIT",
   "require": {
