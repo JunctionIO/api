@@ -45,8 +45,8 @@ final class FactoryDefinitions
         $factory->define(DestinationType::class, function (Generator $faker) {
             return [
                 'id'            => Uuid::v7(),
-                'name'          => $faker->word,
-                'queue'         => $faker->slug(1),
+                'name'          => $faker->unique()->word,
+                'queue'         => $faker->unique()->slug(1),
                 'description'   => $faker->sentence,
                 'config_schema' => [],
                 'created_at'    => new DateTimeImmutable(),
@@ -57,7 +57,7 @@ final class FactoryDefinitions
         $factory->define(Event::class, function (Generator $faker) {
             return [
                 'id'          => Uuid::v7(),
-                'name'        => $faker->word,
+                'name'        => $faker->unique()->word,
                 'description' => $faker->sentence,
                 'created_at'  => new DateTimeImmutable(),
                 'updated_at'  => new DateTimeImmutable(),
