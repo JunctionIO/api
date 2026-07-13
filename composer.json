@@ -3,6 +3,12 @@
   "description": "Junction API Application",
   "type": "project",
   "license": "MIT",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/JunctionIO/cli.git"
+    }
+  ],
   "require": {
     "php": "^8.4",
     "firebase/php-jwt": "^7.1",
@@ -18,6 +24,8 @@
   },
   "require-dev": {
     "bnf/phpstan-psr-container": "^1.0",
+    "fakerphp/faker": "^1.24",
+    "junction/cli": "^0.1",
     "phpstan/phpstan": "^2.0",
     "phpunit/phpunit": "^11.0"
   },
@@ -37,6 +45,12 @@
   "scripts": {
     "test": [
       "vendor/bin/phpunit"
+    ],
+    "test:unit": [
+      "vendor/bin/phpunit --testsuite=Unit"
+    ],
+    "test:integration": [
+      "vendor/bin/phpunit --testsuite=Integration"
     ],
     "analyze": [
       "vendor/bin/phpstan analyze src --memory-limit=-1"

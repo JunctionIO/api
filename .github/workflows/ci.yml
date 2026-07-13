@@ -6,6 +6,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        suite: [unit, integration]
+
     env:
       COMPOSER_MEMORY_LIMIT: '-1'
 
@@ -24,6 +28,27 @@ jobs:
 
       - run: devenv shell -- composer install
 
-      - run: devenv shell -- composer test
+      - run: devenv shell -- composer test:${{ matrix.suite }}
+
+  analyze:
+    runs-on: ubuntu-latest
+
+    env:
+      COMPOSER_MEMORY_LIMIT: '-1'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: cachix/install-nix-action@v27
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: cachix/cachix-action@v15
+        with:
+          name: devenv
+
+      - run: nix profile install nixpkgs#devenv
+
+      - run: devenv shell -- composer install
 
       - run: devenv shell -- composer analyze
