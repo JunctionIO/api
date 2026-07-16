@@ -10,9 +10,9 @@ final class UpdateDestinationTest extends TestCase
 {
     public function test_patch_destination_updates_name_and_status(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, [
+        $destination = $this->getModelFactory()->create(Destination::class, [
             'name'                => 'original',
             'status'              => 'active',
             'destination_type_id' => $type->id,
@@ -31,20 +31,20 @@ final class UpdateDestinationTest extends TestCase
 
     public function test_patch_destination_validates_config_against_the_destination_types_schema(): void
     {
-        $type = $this->mf->create(DestinationType::class, [
+        $type = $this->getModelFactory()->create(DestinationType::class, [
             'config_schema' => [
                 'url' => ['required' => true, 'rules' => ['string']],
             ],
         ]);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $this->patch("/v0/destinations/{$destination->id}", [
             'config' => [],
         ], [
             'X-Junction-Token' => $this->apiToken('management'),
         ])
-            ->assertUnprocessable()
+            ->assertUnprocessableContent()
             ->assertAttributeEquals('errors.0.field', 'config.url');
 
         $this->patch("/v0/destinations/{$destination->id}", [
@@ -65,9 +65,9 @@ final class UpdateDestinationTest extends TestCase
 
     public function test_patch_destination_requires_a_management_token(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $this->patch("/v0/destinations/{$destination->id}", ['name' => 'updated'])->assertUnauthorized();
     }

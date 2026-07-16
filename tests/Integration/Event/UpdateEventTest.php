@@ -9,7 +9,7 @@ final class UpdateEventTest extends TestCase
 {
     public function test_patch_event_updates_the_description(): void
     {
-        $event = $this->mf->create(Event::class, ['description' => 'original']);
+        $event = $this->getModelFactory()->create(Event::class, ['description' => 'original']);
 
         $this->patch("/v0/events/{$event->id}", ['description' => 'updated'], [
             'X-Junction-Token' => $this->apiToken('management'),
@@ -21,7 +21,7 @@ final class UpdateEventTest extends TestCase
 
     public function test_patch_event_allows_a_null_description(): void
     {
-        $event = $this->mf->create(Event::class, ['description' => 'original']);
+        $event = $this->getModelFactory()->create(Event::class, ['description' => 'original']);
 
         $this->patch("/v0/events/{$event->id}", ['description' => null], [
             'X-Junction-Token' => $this->apiToken('management'),
@@ -32,12 +32,12 @@ final class UpdateEventTest extends TestCase
 
     public function test_patch_event_requires_a_description_key(): void
     {
-        $event = $this->mf->create(Event::class);
+        $event = $this->getModelFactory()->create(Event::class);
 
         $this->patch("/v0/events/{$event->id}", [], [
             'X-Junction-Token' => $this->apiToken('management'),
         ])
-            ->assertUnprocessable()
+            ->assertUnprocessableContent()
             ->assertAttributeEquals('errors.0.field', 'description');
     }
 

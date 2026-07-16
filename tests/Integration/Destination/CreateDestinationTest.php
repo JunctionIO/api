@@ -9,7 +9,7 @@ final class CreateDestinationTest extends TestCase
 {
     public function test_create_destination_creates_a_destination_with_events(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
         $response = $this->post('/v0/destinations', [
             'name'                => 'My Webhook',
@@ -51,7 +51,7 @@ final class CreateDestinationTest extends TestCase
 
     public function test_create_destination_requires_a_valid_status(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
         $this->post('/v0/destinations', [
             'name'                => 'My Webhook',
@@ -61,12 +61,12 @@ final class CreateDestinationTest extends TestCase
             'config'              => [],
         ], [
             'X-Junction-Token' => $this->apiToken('management'),
-        ])->assertUnprocessable();
+        ])->assertUnprocessableContent();
     }
 
     public function test_create_destination_validates_config_against_the_destination_types_schema(): void
     {
-        $type = $this->mf->create(DestinationType::class, [
+        $type = $this->getModelFactory()->create(DestinationType::class, [
             'config_schema' => [
                 'url' => ['required' => true, 'rules' => ['string']],
             ],
@@ -81,13 +81,13 @@ final class CreateDestinationTest extends TestCase
         ], [
             'X-Junction-Token' => $this->apiToken('management'),
         ])
-            ->assertUnprocessable()
+            ->assertUnprocessableContent()
             ->assertAttributeEquals('errors.0.field', 'config.url');
     }
 
     public function test_create_destination_requires_a_management_token(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
         $this->post('/v0/destinations', [
             'name'                => 'My Webhook',

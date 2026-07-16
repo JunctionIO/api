@@ -10,10 +10,10 @@ final class ListEventLogsTest extends TestCase
 {
     public function test_list_event_logs_returns_all_with_event_relation(): void
     {
-        $event = $this->mf->create(Event::class, ['name' => 'user.created']);
+        $event = $this->getModelFactory()->create(Event::class, ['name' => 'user.created']);
 
-        $this->mf->create(EventLog::class, ['event_id' => $event->id]);
-        $this->mf->create(EventLog::class, ['event_id' => $event->id]);
+        $this->getModelFactory()->create(EventLog::class, ['event_id' => $event->id]);
+        $this->getModelFactory()->create(EventLog::class, ['event_id' => $event->id]);
 
         $response = $this->get('/v0/event-logs', [
             'X-Junction-Token' => $this->apiToken('management'),
@@ -30,11 +30,11 @@ final class ListEventLogsTest extends TestCase
 
     public function test_list_event_logs_filters_by_event_name(): void
     {
-        $created = $this->mf->create(Event::class, ['name' => 'user.created']);
-        $deleted = $this->mf->create(Event::class, ['name' => 'user.deleted']);
+        $created = $this->getModelFactory()->create(Event::class, ['name' => 'user.created']);
+        $deleted = $this->getModelFactory()->create(Event::class, ['name' => 'user.deleted']);
 
-        $this->mf->create(EventLog::class, ['event_id' => $created->id]);
-        $this->mf->create(EventLog::class, ['event_id' => $deleted->id]);
+        $this->getModelFactory()->create(EventLog::class, ['event_id' => $created->id]);
+        $this->getModelFactory()->create(EventLog::class, ['event_id' => $deleted->id]);
 
         $response = $this->get('/v0/event-logs', [
             'X-Junction-Token' => $this->apiToken('management'),
@@ -50,9 +50,9 @@ final class ListEventLogsTest extends TestCase
 
     public function test_list_event_logs_filter_with_unknown_event_name_returns_empty(): void
     {
-        $event = $this->mf->create(Event::class);
+        $event = $this->getModelFactory()->create(Event::class);
 
-        $this->mf->create(EventLog::class, ['event_id' => $event->id]);
+        $this->getModelFactory()->create(EventLog::class, ['event_id' => $event->id]);
 
         $response = $this->get('/v0/event-logs', [
             'X-Junction-Token' => $this->apiToken('management'),

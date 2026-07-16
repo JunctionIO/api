@@ -9,9 +9,9 @@ final class ListEventsTest extends TestCase
 {
     public function test_list_events_returns_all_events(): void
     {
-        $this->mf->create(Event::class);
-        $this->mf->create(Event::class);
-        $this->mf->create(Event::class);
+        $this->getModelFactory()->create(Event::class);
+        $this->getModelFactory()->create(Event::class);
+        $this->getModelFactory()->create(Event::class);
 
         $response = $this->get('/v0/events', [
             'X-Junction-Token' => $this->apiToken('management'),
@@ -27,9 +27,9 @@ final class ListEventsTest extends TestCase
 
     public function test_list_events_respects_limit_and_paginates(): void
     {
-        $this->mf->create(Event::class);
-        $this->mf->create(Event::class);
-        $this->mf->create(Event::class);
+        $this->getModelFactory()->create(Event::class);
+        $this->getModelFactory()->create(Event::class);
+        $this->getModelFactory()->create(Event::class);
 
         $response = $this->get('/v0/events', [
             'X-Junction-Token' => $this->apiToken('management'),

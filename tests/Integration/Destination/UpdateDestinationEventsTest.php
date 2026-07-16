@@ -10,9 +10,9 @@ final class UpdateDestinationEventsTest extends TestCase
 {
     public function test_put_destination_events_replaces_the_event_set(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $this->put("/v0/destinations/{$destination->id}/events", [
             'events' => [['name' => 'user.created'], ['name' => 'user.deleted']],
@@ -36,13 +36,13 @@ final class UpdateDestinationEventsTest extends TestCase
 
     public function test_put_destination_events_requires_an_events_array(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $this->put("/v0/destinations/{$destination->id}/events", [], [
             'X-Junction-Token' => $this->apiToken('management'),
-        ])->assertUnprocessable();
+        ])->assertUnprocessableContent();
     }
 
     public function test_put_destination_events_returns_not_found_for_unknown_id(): void
@@ -56,9 +56,9 @@ final class UpdateDestinationEventsTest extends TestCase
 
     public function test_put_destination_events_requires_a_management_token(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $this->put("/v0/destinations/{$destination->id}/events", [
             'events' => [['name' => 'user.created']],

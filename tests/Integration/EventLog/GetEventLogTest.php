@@ -10,9 +10,9 @@ final class GetEventLogTest extends TestCase
 {
     public function test_get_event_log_returns_the_record_with_event(): void
     {
-        $event = $this->mf->create(Event::class, ['name' => 'user.created']);
+        $event = $this->getModelFactory()->create(Event::class, ['name' => 'user.created']);
 
-        $log = $this->mf->create(EventLog::class, [
+        $log = $this->getModelFactory()->create(EventLog::class, [
             'event_id' => $event->id,
             'source_ip' => '203.0.113.5',
         ]);
@@ -36,9 +36,9 @@ final class GetEventLogTest extends TestCase
 
     public function test_get_event_log_requires_a_management_token(): void
     {
-        $event = $this->mf->create(Event::class);
+        $event = $this->getModelFactory()->create(Event::class);
 
-        $log = $this->mf->create(EventLog::class, ['event_id' => $event->id]);
+        $log = $this->getModelFactory()->create(EventLog::class, ['event_id' => $event->id]);
 
         $this->get("/v0/event-logs/{$log->id}")->assertUnauthorized();
     }

@@ -79,6 +79,7 @@ final class LogDebugInfoTest extends TestCase
             public function afterShutdown(callable $callback): static { return $this; }
             public function addDefinition(string $id, callable $factory, bool $shared = false, array $aliases = [], array $tags = []): static { return $this; }
             public function define(string $id, callable $factory): DefinitionInterface { throw new \LogicException('not implemented'); }
+            public function override(string $id, callable $factory, bool $preserve = false): DefinitionInterface { throw new \LogicException('not implemented'); }
             public function tag(string $id, array $tags): static { return $this; }
             public function decorate(string $id, callable $decorator): static { return $this; }
             public function addModule(ModuleInterface $module): static { return $this; }

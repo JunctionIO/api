@@ -96,7 +96,7 @@ final class RegisterDestinationTypeTest extends TestCase
             'name' => '',
         ], [
             'X-Junction-Token' => $this->apiToken('system'),
-        ])->assertUnprocessable();
+        ])->assertUnprocessableContent();
     }
 
     public function test_register_requires_a_valid_queue_format(): void
@@ -106,6 +106,6 @@ final class RegisterDestinationTypeTest extends TestCase
             'queue' => 'not a valid queue name!',
         ], [
             'X-Junction-Token' => $this->apiToken('system'),
-        ])->assertUnprocessable();
+        ])->assertUnprocessableContent();
     }
 }

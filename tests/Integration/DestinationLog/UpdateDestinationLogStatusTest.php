@@ -16,10 +16,10 @@ final class UpdateDestinationLogStatusTest extends TestCase
 
     public function test_update_status_updates_a_destination_log(): void
     {
-        $eventLog    = $this->mf->create(EventLog::class);
-        $destination = $this->mf->create(Destination::class);
+        $eventLog    = $this->getModelFactory()->create(EventLog::class);
+        $destination = $this->getModelFactory()->create(Destination::class);
 
-        $log = $this->mf->create(DestinationLog::class, [
+        $log = $this->getModelFactory()->create(DestinationLog::class, [
             'event_log_id'   => $eventLog->id,
             'destination_id' => $destination->id,
             'status'         => 'pending',
@@ -49,10 +49,10 @@ final class UpdateDestinationLogStatusTest extends TestCase
 
     public function test_update_status_records_an_error(): void
     {
-        $eventLog    = $this->mf->create(EventLog::class);
-        $destination = $this->mf->create(Destination::class);
+        $eventLog    = $this->getModelFactory()->create(EventLog::class);
+        $destination = $this->getModelFactory()->create(Destination::class);
 
-        $log = $this->mf->create(DestinationLog::class, [
+        $log = $this->getModelFactory()->create(DestinationLog::class, [
             'event_log_id'   => $eventLog->id,
             'destination_id' => $destination->id,
             'status'         => 'pending',
@@ -79,7 +79,7 @@ final class UpdateDestinationLogStatusTest extends TestCase
 
     public function test_update_status_requires_a_valid_status(): void
     {
-        $log = $this->mf->create(DestinationLog::class);
+        $log = $this->getModelFactory()->create(DestinationLog::class);
 
         $this->post('/system/status', [
             'log_id'       => $log->id,
@@ -87,12 +87,12 @@ final class UpdateDestinationLogStatusTest extends TestCase
             'attempted_at' => $this->attemptedAt(),
         ], [
             'X-Junction-Token' => $this->apiToken('system'),
-        ])->assertUnprocessable();
+        ])->assertUnprocessableContent();
     }
 
     public function test_update_status_requires_a_valid_attempted_at_format(): void
     {
-        $log = $this->mf->create(DestinationLog::class);
+        $log = $this->getModelFactory()->create(DestinationLog::class);
 
         $this->post('/system/status', [
             'log_id'       => $log->id,
@@ -100,7 +100,7 @@ final class UpdateDestinationLogStatusTest extends TestCase
             'attempted_at' => '2026-07-13 12:00:00',
         ], [
             'X-Junction-Token' => $this->apiToken('system'),
-        ])->assertUnprocessable();
+        ])->assertUnprocessableContent();
     }
 
     public function test_update_status_returns_not_found_for_unknown_log_id(): void
@@ -116,7 +116,7 @@ final class UpdateDestinationLogStatusTest extends TestCase
 
     public function test_update_status_requires_a_system_token(): void
     {
-        $log = $this->mf->create(DestinationLog::class);
+        $log = $this->getModelFactory()->create(DestinationLog::class);
 
         $this->post('/system/status', [
             'log_id'       => $log->id,

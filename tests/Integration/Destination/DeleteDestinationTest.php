@@ -10,11 +10,11 @@ final class DeleteDestinationTest extends TestCase
 {
     public function test_delete_destination_removes_the_record(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
-        $this->delete("/v0/destinations/{$destination->id}", [], [
+        $this->delete("/v0/destinations/{$destination->id}", [
             'X-Junction-Token' => $this->apiToken('management'),
         ])->assertNoContent();
 
@@ -25,16 +25,16 @@ final class DeleteDestinationTest extends TestCase
 
     public function test_delete_destination_returns_not_found_for_unknown_id(): void
     {
-        $this->delete('/v0/destinations/does-not-exist', [], [
+        $this->delete('/v0/destinations/does-not-exist', [
             'X-Junction-Token' => $this->apiToken('management'),
         ])->assertNotFound();
     }
 
     public function test_delete_destination_requires_a_management_token(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $this->delete("/v0/destinations/{$destination->id}")->assertUnauthorized();
     }

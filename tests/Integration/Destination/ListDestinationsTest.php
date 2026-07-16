@@ -10,10 +10,10 @@ final class ListDestinationsTest extends TestCase
 {
     public function test_list_destinations_returns_all_with_relations(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
-        $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
+        $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $response = $this->get('/v0/destinations', [
             'X-Junction-Token' => $this->apiToken('management'),

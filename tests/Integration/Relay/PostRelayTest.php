@@ -10,7 +10,9 @@ final class PostRelayTest extends TestCase
 {
     public function test_relay_publishes_a_message_to_the_subscribed_destinations_queue(): void
     {
-        $type = $this->mf->create(DestinationType::class, ['name' => 'http', 'queue' => 'http']);
+        $queue = $this->getMemoryQueue();
+
+        $type = $this->getModelFactory()->create(DestinationType::class, ['name' => 'http', 'queue' => 'http']);
 
         $this->post('/v0/destinations', [
             'name'                => 'My Webhook',
@@ -21,8 +23,6 @@ final class PostRelayTest extends TestCase
         ], [
             'X-Junction-Token' => $this->apiToken('management'),
         ])->assertCreated();
-
-        $queue = $this->getMemoryQueue();
 
         $response = $this->post('/relay', ['payload' => ['id' => 'abc123']], [
             'X-Junction-Token' => $this->apiToken('relay'),
@@ -95,7 +95,7 @@ final class PostRelayTest extends TestCase
         $this->post('/relay', [], [
             'X-Junction-Token' => $this->apiToken('relay'),
             'X-Junction-Event' => 'user.created',
-        ])->assertUnprocessable();
+        ])->assertUnprocessableContent();
     }
 
     public function test_relay_requires_a_relay_token(): void

@@ -11,15 +11,15 @@ final class ListDestinationLogsForDestinationTest extends TestCase
 {
     public function test_list_returns_logs_for_the_destination_with_relations(): void
     {
-        $destination = $this->mf->create(Destination::class, ['name' => 'My Webhook']);
-        $other       = $this->mf->create(Destination::class);
-        $eventLog    = $this->mf->create(EventLog::class);
+        $destination = $this->getModelFactory()->create(Destination::class, ['name' => 'My Webhook']);
+        $other       = $this->getModelFactory()->create(Destination::class);
+        $eventLog    = $this->getModelFactory()->create(EventLog::class);
 
-        $this->mf->create(DestinationLog::class, [
+        $this->getModelFactory()->create(DestinationLog::class, [
             'destination_id' => $destination->id,
             'event_log_id'   => $eventLog->id,
         ]);
-        $this->mf->create(DestinationLog::class, [
+        $this->getModelFactory()->create(DestinationLog::class, [
             'destination_id' => $other->id,
             'event_log_id'   => $eventLog->id,
         ]);
@@ -46,7 +46,7 @@ final class ListDestinationLogsForDestinationTest extends TestCase
 
     public function test_list_requires_a_management_token(): void
     {
-        $destination = $this->mf->create(Destination::class);
+        $destination = $this->getModelFactory()->create(Destination::class);
 
         $this->get("/v0/destinations/{$destination->id}/event-logs")->assertUnauthorized();
     }

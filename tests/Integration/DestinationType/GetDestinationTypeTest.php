@@ -9,7 +9,7 @@ final class GetDestinationTypeTest extends TestCase
 {
     public function test_get_destination_type_returns_the_record(): void
     {
-        $destinationType = $this->mf->create(DestinationType::class, [
+        $destinationType = $this->getModelFactory()->create(DestinationType::class, [
             'name' => 'http',
         ]);
 
@@ -30,7 +30,7 @@ final class GetDestinationTypeTest extends TestCase
 
     public function test_get_destination_type_requires_a_management_token(): void
     {
-        $destinationType = $this->mf->create(DestinationType::class);
+        $destinationType = $this->getModelFactory()->create(DestinationType::class);
 
         $this->get("/v0/destination-types/{$destinationType->id}")->assertUnauthorized();
     }

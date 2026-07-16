@@ -9,7 +9,7 @@ final class GetEventTest extends TestCase
 {
     public function test_get_event_returns_the_event(): void
     {
-        $event = $this->mf->create(Event::class, [
+        $event = $this->getModelFactory()->create(Event::class, [
             'name'        => 'user.created',
             'description' => 'Fires when a user is created',
         ]);

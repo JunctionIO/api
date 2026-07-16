@@ -10,9 +10,9 @@ final class GetDestinationTest extends TestCase
 {
     public function test_get_destination_returns_the_record_with_relations(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, [
+        $destination = $this->getModelFactory()->create(Destination::class, [
             'name'                => 'My Webhook',
             'destination_type_id' => $type->id,
         ]);
@@ -36,9 +36,9 @@ final class GetDestinationTest extends TestCase
 
     public function test_get_destination_requires_a_management_token(): void
     {
-        $type = $this->mf->create(DestinationType::class);
+        $type = $this->getModelFactory()->create(DestinationType::class);
 
-        $destination = $this->mf->create(Destination::class, ['destination_type_id' => $type->id]);
+        $destination = $this->getModelFactory()->create(Destination::class, ['destination_type_id' => $type->id]);
 
         $this->get("/v0/destinations/{$destination->id}")->assertUnauthorized();
     }
