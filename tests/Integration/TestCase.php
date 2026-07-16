@@ -4,6 +4,7 @@ namespace Junction\Api\Test\Integration;
 
 use Firebase\JWT\JWT;
 use Meritum\Cli\CliKernel;
+use Psr\Log\LoggerInterface;
 use Meritum\Http\HttpKernel;
 use Georgeff\Kernel\Support\Env;
 use Georgeff\Kernel\Environment;
@@ -39,6 +40,8 @@ abstract class TestCase extends \Meritum\Testing\TestCase
             new CliKernel(Environment::Testing)->addRepository(new CliModules()),
             CliKernelInterface::class
         );
+
+        $this->kernel->instance(LoggerInterface::class, new Logging\LogSpy(), HttpKernelInterface::class);
 
         $this->migrate();
     }
